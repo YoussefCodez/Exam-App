@@ -6,6 +6,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0.0,
+        padding: EdgeInsets.all(16.0),
         backgroundColor: AppColors.buttonActiveColor,
         foregroundColor: AppColors.white,
         textStyle: TextStyle(fontSize: 16,fontWeight: FontWeight(500)),
