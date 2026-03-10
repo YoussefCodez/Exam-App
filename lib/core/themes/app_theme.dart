@@ -5,12 +5,10 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(343, 48),
         elevation: 0.0,
         backgroundColor: AppColors.buttonActiveColor,
         foregroundColor: AppColors.white,
         textStyle: TextStyle(fontSize: 16,fontWeight: FontWeight(500)),
-        padding: const EdgeInsets.fromLTRB(24,10,24,10),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100),
         ),
