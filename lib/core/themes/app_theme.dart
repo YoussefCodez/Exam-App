@@ -22,7 +22,7 @@ class AppTheme {
       bodyMedium: TextStyle(fontSize: 16,fontWeight: FontWeight(400),color: AppColors.black),
     ),
 
-    appBarTheme: AppBarTheme(leadingWidth: 11.78,elevation: 0.0,foregroundColor: AppColors.black),
+    appBarTheme: AppBarTheme(elevation: 0.0,foregroundColor: AppColors.black),
 
     inputDecorationTheme: InputDecorationTheme(
     floatingLabelBehavior: FloatingLabelBehavior.always,
