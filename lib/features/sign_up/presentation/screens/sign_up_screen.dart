@@ -1,137 +1,170 @@
+import 'package:exam/features/sign_up/presentation/view_model/cubit/signup_view_model.dart';
+import 'package:exam/features/sign_up/presentation/view_model/states/signup_states.dart';
 import 'package:exam/features/sign_up/presentation/widgets/underlined_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/di/di.dart';
 import '../../../../core/themes/app_colors.dart';
 
 class SignUpScreen extends StatelessWidget {
   static const String routeName = 'SignUpScreen';
 
-  const SignUpScreen({super.key});
+  SignUpScreen({super.key});
+
+  SignupViewModel viewModel = getIt.get<SignupViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsetsGeometry.all(16.0),
-          child: Icon(Icons.arrow_back_ios),
+    return BlocProvider<SignupViewModel>(
+      create: (context) => viewModel..addUser(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: Padding(
+            padding: EdgeInsetsGeometry.all(16.0),
+            child: Icon(Icons.arrow_back_ios),
+          ),
+          title: Text('Sign Up'),
+          titleSpacing: 0,
         ),
-        title: Text('Sign Up'),
-        titleSpacing: 0,
-      ),
-      body: Column(
-        children: [
-          // username
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Username",
-                hintText: "Enter your username",
-              ),
-            ),
-          ),
+        body: BlocBuilder<SignupViewModel, SignupStates>(
+          builder: (context, state) {
+            if (state is SignupLoading) {
+              return const Center(child: CircularProgressIndicator(color: Colors.blueAccent),);
+            }
 
-          // first and last names
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "First name",
-                      hintText: "Enter first name",
+            if (state is SignupError) {
+              return Center(child: Text("Error: ${state.message}"));
+            }
+
+            if (state is SignupSuccess) {
+
+              return Column(
+                children: [
+                  // username
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "Username",
+                        hintText: "Enter your username",
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Last name",
-                      hintText: "Enter Last name",
+
+                  // first and last names
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "First name",
+                              hintText: "Enter first name",
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Last name",
+                              hintText: "Enter Last name",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  // email
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "Email",
+                        hintText: "Enter your email",
+                      ),
                     ),
                   ),
-                ),
-              ),
-            ],
-          ),
 
-          // email
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Email",
-                hintText: "Enter your email",
-              ),
-            ),
-          ),
+                  // password and confirm password
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Password",
+                              hintText: "Enter password",
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: "Confirm password",
+                              hintText: "Confirm password",
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
 
-          // password and confirm password
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Password",
-                      hintText: "Enter password",
+                  // phone number
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: "Phone number",
+                        hintText: "Enter your phone number",
+                      ),
                     ),
                   ),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      labelText: "Confirm password",
-                      hintText: "Confirm password",
-                    ),
+
+                  // Signup button
+                  Row(
+                    children: [
+                      Expanded(child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ElevatedButton(onPressed: (){}, child: Text("Signup")),
+                      )),
+                    ],
                   ),
-                ),
-              ),
-            ],
-          ),
 
-          // phone number
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                labelText: "Phone number",
-                hintText: "Enter your phone number",
-              ),
-            ),
-          ),
+                  // Already have an account
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Already have an account? "),
+                      UnderlinedText(underlinedText: "Login"),
+                    ],
+                  )
+                ],
 
-          // Signup button
-          Row(
-            children: [
-              Expanded(child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(onPressed: (){}, child: Text("Signup")),
-              )),
-            ],
-          ),
+              );
+            }
 
-          // Already have an account
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Already have an account? "),
-              UnderlinedText(underlinedText: "Login"),
-            ],
-          )
-        ],
-        
+            else { // Initial state
+              return SizedBox( child: Center(child: Column(
+                children: [
+                  Text(state.toString()),
+                  const CircularProgressIndicator(color: Colors.red,),
+                ],
+              )),);
+            }
+          },
+        ),
       ),
     );
   }

@@ -1,9 +1,10 @@
 import 'package:exam/features/sign_up/presentation/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'config/di/di.dart';
 import 'core/themes/app_theme.dart';
 
 Future<void> main() async {
+  configureDependencies();
   runApp(MyApp());
 }
 
