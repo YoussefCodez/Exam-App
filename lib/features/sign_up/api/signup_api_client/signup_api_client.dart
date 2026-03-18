@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:exam/config/base_response/base_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../config/values/endpoints.dart';

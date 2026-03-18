@@ -40,6 +40,8 @@ dependencies:
   injectable:
   get_it:
   dio: ^5.9.2
+  email_validator: ^3.0.0
+  password_validator_mate: ^0.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter
