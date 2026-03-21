@@ -1,4 +1,6 @@
 import 'package:exam/config/di/di.dart';
+import 'package:exam/config/values/forgot_password_titles.dart';
+import 'package:exam/config/values/routes.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/reset_password/presentation/screens/new_password_screen.dart';
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
@@ -9,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerificationScreen extends StatelessWidget {
-  static const String routeName = '/verification';
+  static const String routeName = Routes.verificationScreen;
 
   VerificationScreen({super.key});
 
@@ -18,7 +20,14 @@ class VerificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String email = ModalRoute.of(context)!.settings.arguments as String;
-    List<String> pinCode = ['', '', '', '', '', ''];
+    List<String> pinCode = [
+      ForgotPasswordTitles.empty,
+      ForgotPasswordTitles.empty,
+      ForgotPasswordTitles.empty,
+      ForgotPasswordTitles.empty,
+      ForgotPasswordTitles.empty,
+      ForgotPasswordTitles.empty,
+    ];
     return BlocProvider(
       create: (context) => viewModel,
       child: BlocListener<ResetViewModel, ResetStates>(
@@ -38,7 +47,7 @@ class VerificationScreen extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: AppBar(title: const Text('Password')),
+          appBar: AppBar(title: const Text(ForgotPasswordTitles.password)),
           body: BlocBuilder<ResetViewModel, ResetStates>(
             builder: (context, state) {
               if (state is ResetLoading) {
@@ -57,7 +66,14 @@ class VerificationScreen extends StatelessWidget {
 
               if (state is ResetError) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  pinCode = ['', '', '', '', '', ''];
+                  pinCode = [
+                    ForgotPasswordTitles.empty,
+                    ForgotPasswordTitles.empty,
+                    ForgotPasswordTitles.empty,
+                    ForgotPasswordTitles.empty,
+                    ForgotPasswordTitles.empty,
+                    ForgotPasswordTitles.empty,
+                  ];
                   ScaffoldMessenger.of(
                     context,
                   ).showSnackBar(SnackBar(content: Text(state.message)));
@@ -67,14 +83,14 @@ class VerificationScreen extends StatelessWidget {
               return Column(
                 children: [
                   Text(
-                    'Email verification',
+                    ForgotPasswordTitles.emailVerifier,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
 
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      'Please enter your code that send to your\n email address ',
+                      ForgotPasswordTitles.enterCodeFromEmail,
                       style: Theme.of(context).textTheme.bodySmall,
                       textAlign: TextAlign.center,
                     ),
@@ -100,7 +116,7 @@ class VerificationScreen extends StatelessWidget {
                                 ),
                             maxLength: 1,
                             decoration: const InputDecoration(
-                              counterText: "",
+                              counterText: ForgotPasswordTitles.empty,
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (value) {
@@ -126,7 +142,7 @@ class VerificationScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Didn't receive code? "),
+                      const Text(ForgotPasswordTitles.noCodeReceived),
                       InkWell(
                         onTap: () {
                           viewModel.doEvent(
@@ -135,7 +151,9 @@ class VerificationScreen extends StatelessWidget {
                           );
                         },
 
-                        child: UnderlinedText(underlinedText: "Resend"),
+                        child: UnderlinedText(
+                          underlinedText: ForgotPasswordTitles.resendCode,
+                        ),
                       ),
                     ],
                   ),

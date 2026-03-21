@@ -1,4 +1,6 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:exam/config/values/forgot_password_titles.dart';
+import 'package:exam/config/values/routes.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/reset_password/presentation/screens/verification_screen.dart';
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
@@ -9,7 +11,7 @@ import '../../../../config/di/di.dart';
 import 'package:flutter/material.dart';
 
 class ResetScreen extends StatefulWidget {
-  static const String routeName = '/reset';
+  static const String routeName = Routes.forgotPasswordScreen;
   const ResetScreen({super.key});
 
   @override
@@ -34,7 +36,7 @@ class _ResetScreenState extends State<ResetScreen> {
       create: (context) => viewModel,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Password'),
+          title: const Text(ForgotPasswordTitles.password),
           titleSpacing: 0.0,
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
@@ -69,14 +71,14 @@ class _ResetScreenState extends State<ResetScreen> {
                   const SizedBox(height: 20),
 
                   Text(
-                    'Forget password',
+                    ForgotPasswordTitles.forgotPassword,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
 
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
-                      'Please enter your email associated to\n your account',
+                      ForgotPasswordTitles.assosciatedEmail,
                       style: Theme.of(context).textTheme.bodySmall,
                       textAlign: TextAlign.center,
                     ),
@@ -91,15 +93,15 @@ class _ResetScreenState extends State<ResetScreen> {
                     child: TextFormField(
                       controller: emailTextController,
                       decoration: const InputDecoration(
-                        labelText: "Email",
-                        hintText: "Enter your email",
+                        labelText: ForgotPasswordTitles.email,
+                        hintText: ForgotPasswordTitles.enterEmail,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Email is required';
+                          return ForgotPasswordTitles.emailRequired;
                         }
                         if (!EmailValidator.validate(value.trim())) {
-                          return 'The Email is not valid';
+                          return ForgotPasswordTitles.notValidEmail;
                         }
                         return null;
                       },
@@ -122,7 +124,7 @@ class _ResetScreenState extends State<ResetScreen> {
                             );
                           }
                         },
-                        child: const Text("Continue"),
+                        child: const Text(ForgotPasswordTitles.continueButton),
                       ),
                     ),
                   ),

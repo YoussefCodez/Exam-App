@@ -4,32 +4,13 @@ import '../values/endpoints.dart';
 
 @module
 abstract class DioModule {
-
-  @lazySingleton
+  @singleton
   Dio dio() {
-    final dio = Dio();
-
+    final dio = Dio(); // With default `Options`.
+    // Set default configs
     dio.options.baseUrl = Endpoints.baseUrl;
-
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        if (options.data != null) {
-          // Print outgoing request body (including signup user object)
-          print('DIO REQUEST: ${options.method} ${options.uri}');
-          print('DIO REQUEST BODY: ${options.data}');
-        }
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        print('DIO RESPONSE: ${response.statusCode} ${response.requestOptions.uri}');
-        return handler.next(response);
-      },
-      onError: (DioException err, handler) {
-        print('DIO ERROR: ${err.response?.statusCode} ${err.requestOptions.uri}');
-        print('DIO ERROR DATA: ${err.response?.data}');
-        return handler.next(err);
-      },
-    ));
+    dio.options.connectTimeout = Duration(seconds: 5);
+    dio.options.receiveTimeout = Duration(seconds: 3);
 
     return dio;
   }

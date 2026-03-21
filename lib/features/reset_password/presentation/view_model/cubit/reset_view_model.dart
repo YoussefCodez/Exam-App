@@ -2,9 +2,7 @@ import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/features/reset_password/data/models/new_password_response.dart';
 import 'package:exam/features/reset_password/data/models/forgot_password_response.dart';
 import 'package:exam/features/reset_password/data/models/verify_reset_response.dart';
-import 'package:exam/features/reset_password/domain/use_cases/new_password_use_case.dart';
 import 'package:exam/features/reset_password/domain/use_cases/forgot_password_use_case.dart';
-import 'package:exam/features/reset_password/domain/use_cases/verify_reset_use_case.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_events.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,12 +11,8 @@ import 'package:injectable/injectable.dart';
 @injectable
 class ResetViewModel extends Cubit<ResetStates> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
-  final VerifyResetUseCase _verifyResetUseCase;
-  final NewPasswordUseCase _newPasswordUseCase;
   ResetViewModel(
     this._forgotPasswordUseCase,
-    this._verifyResetUseCase,
-    this._newPasswordUseCase,
   ) : super(ResetInitial());
 
   // MVI EVENTS
@@ -52,7 +46,7 @@ class ResetViewModel extends Cubit<ResetStates> {
   void _verifyResetCode(String code) async {
     emit(ResetLoading());
 
-    final response = await _verifyResetUseCase.verifyResetCode(code);
+    final response = await _forgotPasswordUseCase.verifyResetCode(code);
     switch (response) {
       case SuccessBaseResponse<VerifyResetResponse>():
         emit(ResetSuccess());
@@ -67,7 +61,7 @@ class ResetViewModel extends Cubit<ResetStates> {
     void _newPassword(String email, String newPassword) async {
     emit(ResetLoading());
 
-    final response = await _newPasswordUseCase.newPassword(email, newPassword);
+    final response = await _forgotPasswordUseCase.newPassword(email, newPassword);
     switch (response) {
       case SuccessBaseResponse<NewPasswordResponse>():
         emit(ResetSuccess());
