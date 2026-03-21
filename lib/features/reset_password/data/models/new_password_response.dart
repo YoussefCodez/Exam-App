@@ -1,10 +1,11 @@
+import 'package:exam/config/values/reset_responses.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'new_password_response.g.dart';
 @JsonSerializable()
 class NewPasswordResponse {
-    @JsonKey(name: "message")
+    @JsonKey(name: ResetResponses.message)
     String? message;
-    @JsonKey(name: "token")
+    @JsonKey(name: ResetResponses.token)
     String? token;
 
     NewPasswordResponse({

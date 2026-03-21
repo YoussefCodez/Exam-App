@@ -1,4 +1,6 @@
 import 'package:exam/config/di/di.dart';
+import 'package:exam/config/values/forgot_password_titles.dart';
+import 'package:exam/config/values/routes.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_events.dart';
@@ -8,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password_validator_mate/password_validator_mate.dart';
 
 class NewPasswordScreen extends StatefulWidget {
-  static const String routeName = '/new_password';
+  static const String routeName = Routes.newPasswordScreen;
 
   const NewPasswordScreen({super.key});
 
@@ -39,7 +41,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
       create: (context) => viewModel,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Password'),
+          title: const Text(ForgotPasswordTitles.password),
           titleSpacing: 0.0,
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
@@ -53,7 +55,9 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 child: CircularProgressIndicator(color: AppColors.blue),
               );
             } else if (state is ResetSuccess) {
-              return const Center(child: Text('Password Updated'));
+              return const Center(
+                child: Text(ForgotPasswordTitles.passwordUpdated),
+              ); //then Navigate to login
             } else if (state is ResetError) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 ScaffoldMessenger.of(
@@ -67,7 +71,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               child: Column(
                 children: [
                   Text(
-                    'Reset password',
+                    ForgotPasswordTitles.resetPassword,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
 
@@ -81,13 +85,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       controller: passwordTextController,
                       obscureText: true,
                       decoration: const InputDecoration(
-                        labelText: "Password",
-                        hintText: "Enter password",
+                        labelText: ForgotPasswordTitles.password,
+                        hintText: ForgotPasswordTitles.enterPassword,
                       ),
                       onChanged: (_) => setState(() {}),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Password is required';
+                          return ForgotPasswordTitles.passwordRequired;
                         }
 
                         final rules = PasswordValidators.defaultRules();
@@ -111,15 +115,15 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                       controller: confirmPasswordTextController,
                       obscureText: true,
                       decoration: const InputDecoration(
-                        labelText: "Confirm password",
-                        hintText: "Confirm password",
+                        labelText: ForgotPasswordTitles.confirmPassword,
+                        hintText: ForgotPasswordTitles.confirmPassword,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Confirm password is required';
+                          return ForgotPasswordTitles.confirmPasswordIsRequired;
                         }
                         if (value != passwordTextController.text) {
-                          return 'Password not matched';
+                          return ForgotPasswordTitles.notMatchPassword;
                         }
                         return null;
                       },
@@ -157,11 +161,11 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                       .trim(),
                                 );
 
-                                print("password updated successfully");
+                                print(ForgotPasswordTitles.passwordUpdatedMessage);
                                 // show that password updated successfully then delay and go back to login
                               }
                             },
-                            child: const Text("Continue"),
+                            child: const Text(ForgotPasswordTitles.continueButton),
                           ),
                         ),
                       ),
