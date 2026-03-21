@@ -4,7 +4,7 @@ import 'package:exam/features/reset_password/data/models/new_password_response.d
 import 'package:exam/features/reset_password/data/models/verify_reset_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../../../config/values/endpoints.dart';
+import '../../../../core/values/endpoints.dart';
 part 'forgot_password_api_client.g.dart';
 
 @injectable

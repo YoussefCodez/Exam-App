@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/config/dio/dio_error_handler.dart';
-import 'package:exam/config/values/data_source_map_keys.dart';
+import 'package:exam/core/values/data_source_map_keys.dart';
 import 'package:exam/features/reset_password/api/api_client/forgot_password_api_client.dart';
 import 'package:exam/features/reset_password/data/data_sources/forgot_password_data_sources_contract.dart';
 import 'package:exam/features/reset_password/data/models/forgot_password_response.dart';

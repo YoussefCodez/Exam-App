@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:exam/config/values/dio_exception_errors.dart';
+import 'package:exam/core/values/dio_exception_errors.dart';
 
 class DioErrorHandler {
   static String handle(DioException e) {

@@ -1,6 +1,6 @@
 import 'package:exam/config/di/di.dart';
-import 'package:exam/config/values/forgot_password_titles.dart';
-import 'package:exam/config/values/routes.dart';
+import 'package:exam/core/values/forgot_password_titles.dart';
+import 'package:exam/core/values/routes.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_events.dart';

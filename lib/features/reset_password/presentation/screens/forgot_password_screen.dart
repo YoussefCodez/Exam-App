@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
-import 'package:exam/config/values/forgot_password_titles.dart';
-import 'package:exam/config/values/routes.dart';
+import 'package:exam/core/values/forgot_password_titles.dart';
+import 'package:exam/core/values/routes.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/reset_password/presentation/screens/verification_screen.dart';
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
