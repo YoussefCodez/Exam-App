@@ -1,5 +1,7 @@
-import 'package:exam/core/themes/app_colors.dart';
+import 'package:exam/core/app_colors/app_colors.dart';
+import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
+import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -24,7 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     emailController = .new();
     passwordController = .new();
-
   }
 
   @override
@@ -40,7 +41,9 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginCubit = context.watch<LoginCubit>();
 
     return Scaffold(
-      appBar: AppBar(title: Text('Login', style: theme.textTheme.titleLarge)),
+      appBar: AppBar(
+        title: Text(AppStrings.login, style: theme.textTheme.titleLarge),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -58,8 +61,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() => emailError = null);
                       },
                       decoration: InputDecoration(
-                        hintText: 'Enter your email',
-                        labelText: 'Email',
+                        hintText: AppStrings.enterEmail,
+                        labelText: AppStrings.email,
                         errorText: emailError,
                       ),
                     ),
@@ -72,8 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() => passwordError = null);
                       },
                       decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                        labelText: 'Password',
+                        hintText: AppStrings.enterPassword,
+                        labelText: AppStrings.password,
                         errorText: passwordError,
                       ),
                     ),
@@ -84,19 +87,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           value: loginCubit.rememberMe,
                           onChanged: (value) {
                             setState(() {
-                              loginCubit.toggleRememberMe(value ?? false);
+                              loginCubit.doEvent(
+                                ToggleRememberMe(),
+                                value: value ?? false,
+                              );
                             });
                           },
                         ),
-                        const Text('Remember me'),
+                        const Text(AppStrings.rememberMe),
                         const Spacer(),
                         TextButton(
                           onPressed: () {},
                           child: const Text(
-                            'Forgot Password?',
+                            AppStrings.forgotPassword,
                             style: TextStyle(
-                              color: Colors.black,
-                            decoration: .underline,
+                              color: AppColors.black,
+                              decoration: .underline,
                             ),
                           ),
                         ),
@@ -111,19 +117,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             passwordError = null;
                           });
                         } else if (state is LoginSuccess) {
-                          print("Login Success for: ${state.user.name}");
+                          print("${AppStrings.loginSuccess}${state.user.name}");
                         } else if (state is LoginFailure) {
                           final msg = state.message.toLowerCase();
                           setState(() {
-                            if (msg.contains("email")) {
+                            if (msg.contains(AppStrings.emailLabel)) {
                               emailError = state.message;
-                            } else if (msg.contains("password")) {
+                            } else if (msg.contains(AppStrings.passwordLabel)) {
                               passwordError = state.message;
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(state.message),
-                                  backgroundColor: Colors.red,
+                                  backgroundColor: AppColors.error,
                                 ),
                               );
                             }
@@ -140,28 +146,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (!_formKey.currentState!.validate()) {
                                       return;
                                     }
-                                    context.read<LoginCubit>().login(
+                                    context.read<LoginCubit>().doEvent(
+                                      Login(),
                                       email: emailController.text,
                                       password: passwordController.text,
                                     );
                                   },
-                                  child: const Text('Login'),
+                                  child: const Text(AppStrings.loginButton),
                                 ),
                               );
                       },
                     ),
                     Gap(15.h),
                     Row(
-                    mainAxisAlignment: .center,
+                      mainAxisAlignment: .center,
                       children: [
-                        const Text('Don\'t have an account?'),
+                        const Text(AppStrings.dontHaveAccount),
                         TextButton(
                           onPressed: () {},
                           child: Text(
-                            'Sign Up',
+                            AppStrings.signUp,
                             style: TextStyle(
                               color: AppColors.blue,
-                            decoration: .underline,
+                              decoration: .underline,
                               fontSize: 16.sp,
                             ),
                           ),

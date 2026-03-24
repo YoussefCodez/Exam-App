@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import 'package:exam/core/app_colors/app_colors.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
@@ -32,7 +32,7 @@ class AppTheme {
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
-      borderSide: BorderSide(color: Colors.grey),
+      borderSide: BorderSide(color: AppColors.grey),
     ),
     errorBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),

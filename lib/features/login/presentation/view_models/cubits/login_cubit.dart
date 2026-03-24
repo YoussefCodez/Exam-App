@@ -1,16 +1,18 @@
 import 'package:bloc/bloc.dart';
+import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
 import 'package:exam/features/login/domain/entities/user_entity.dart';
 import 'package:exam/features/login/domain/use_cases/login_use_case.dart';
+import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:injectable/injectable.dart'; // مهم للـ DI
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part '../states/login_state.dart';
 
 @injectable
-class LoginCubit extends Cubit<LoginState> {
+class LoginCubit extends Bloc<LoginEvents, LoginState> {
   final LoginUseCase _loginUseCase;
   final FlutterSecureStorage _secureStorage;
   final SharedPreferences _sharedPreferences;
@@ -20,11 +22,29 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._loginUseCase, this._secureStorage, this._sharedPreferences)
     : super(LoginInitial());
 
-  void toggleRememberMe(bool value) {
-    rememberMe = value;
+  void doEvent(
+    LoginEvents event, {
+    String? email,
+    String? password,
+    bool? value,
+  }) async {
+    switch (event) {
+      case ToggleRememberMe():
+        await _toggleRememberMe(value!);
+      case Login():
+        await _login(email: email!, password: password!);
+      case LoadSavedAccount():
+        await _loadSavedAccount();
+      case GetSavedEmail():
+        await _getSavedEmail();
+    }
   }
 
-  Future<void> login({required String email, required String password}) async {
+  Future<bool> _toggleRememberMe(bool value) async {
+    return rememberMe = value;
+  }
+
+  Future<void> _login({required String email, required String password}) async {
     emit(LoginLoading());
 
     try {
@@ -32,14 +52,17 @@ class LoginCubit extends Cubit<LoginState> {
 
       final userEntity = await _loginUseCase.call(request);
 
-      await _secureStorage.write(key: 'token', value: userEntity.token);
+      await _secureStorage.write(
+        key: AppStrings.tokenKey,
+        value: userEntity.token,
+      );
 
       if (rememberMe) {
-        await _sharedPreferences.setString('saved_email', email);
-        await _sharedPreferences.setBool('remember_me', true);
+        await _sharedPreferences.setString(AppStrings.savedEmailKey, email);
+        await _sharedPreferences.setBool(AppStrings.rememberMeKey, true);
       } else {
-        await _sharedPreferences.remove('saved_email');
-        await _sharedPreferences.setBool('remember_me', false);
+        await _sharedPreferences.remove(AppStrings.savedEmailKey);
+        await _sharedPreferences.setBool(AppStrings.rememberMeKey, false);
       }
 
       emit(LoginSuccess(user: userEntity));
@@ -48,15 +71,16 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void loadSavedAccount() {
-    final email = _sharedPreferences.getString('saved_email');
-    final isRemembered = _sharedPreferences.getBool('remember_me') ?? false;
+  Future<void> _loadSavedAccount() async {
+    final email = await _sharedPreferences.getString(AppStrings.savedEmailKey);
+    final isRemembered =
+        await _sharedPreferences.getBool(AppStrings.rememberMeKey) ?? false;
     if (isRemembered && email != null) {
       rememberMe = true;
     }
   }
 
-  String? getSavedEmail() {
-    return _sharedPreferences.getString('saved_email');
+  String? _getSavedEmail() {
+    return _sharedPreferences.getString(AppStrings.savedEmailKey);
   }
 }
