@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:exam/core/values/sign_up/signup_screen_titles.dart';
 import 'package:exam/features/sign_up/presentation/view_model/states/signup_events.dart';
 import 'package:password_validator_mate/password_validator_mate.dart';
 import 'package:exam/core/themes/app_colors.dart';
@@ -8,11 +9,10 @@ import 'package:exam/features/sign_up/presentation/view_model/states/signup_stat
 import 'package:exam/features/sign_up/presentation/widgets/underlined_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../config/di/di.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const String routeName = 'SignUpScreen';
+  static const String routeName = SignupScreenTitles.routeName;
 
   const SignUpScreen({super.key});
 
@@ -48,7 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     bool isValid = _formKey.currentState?.validate() ?? true;
-    print("is valid: $isValid");
+
     return BlocProvider(
       create: (context) => viewModel,
       child: BlocListener<SignupViewModel, SignupStates>(
@@ -60,15 +60,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
               barrierDismissible: false,
               builder: (context) {
                 return AlertDialog(
-                  title: const Text("Success"),
-                  content: Text("Welcome, ${state.user.firstName}"),
+                  title: const Text(SignupScreenTitles.success),
+                  content: Text(
+                    "${SignupScreenTitles.welcome} ${state.user.firstName}",
+                  ),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context); // close dialog
                         Navigator.pop(context); // go back
                       },
-                      child: const Text("OK"),
+                      child: const Text(SignupScreenTitles.ok),
                     ),
                   ],
                 );
@@ -82,14 +84,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               context: context,
               builder: (context) {
                 return AlertDialog(
-                  title: const Text("Error"),
+                  title: const Text(SignupScreenTitles.error),
                   content: Text(state.message),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text("OK"),
+                      child: const Text(SignupScreenTitles.ok),
                     ),
                   ],
                 );
@@ -109,7 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: EdgeInsets.all(16.0),
               child: Icon(Icons.arrow_back_ios),
             ),
-            title: const Text('Sign Up'),
+            title: const Text(SignupScreenTitles.signUp),
             titleSpacing: 0,
           ),
           body: SingleChildScrollView(
@@ -128,13 +130,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        labelText: "Username",
-                        hintText: "Enter your username",
+                        labelText: SignupScreenTitles.username,
+                        hintText: SignupScreenTitles.usernameHint,
                       ),
                       controller: userNameTextController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Username is required';
+                          return SignupScreenTitles.usernameRequired;
                         }
                         return null;
                       },
@@ -152,13 +154,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              labelText: "First name",
-                              hintText: "Enter first name",
+                              labelText: SignupScreenTitles.firstName,
+                              hintText: SignupScreenTitles.firstNameHint,
                             ),
                             controller: firstNameTextController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'First name is required';
+                                return SignupScreenTitles.firstNameRequired;
                               }
                               return null;
                             },
@@ -173,13 +175,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              labelText: "Last name",
-                              hintText: "Enter last name",
+                              labelText: SignupScreenTitles.lastName,
+                              hintText: SignupScreenTitles.lastNameHint,
                             ),
                             controller: lastNameTextController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Last name is required';
+                                return SignupScreenTitles.lastNameRequired;
                               }
                               return null;
                             },
@@ -197,16 +199,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        labelText: "Email",
-                        hintText: "Enter your email",
+                        labelText: SignupScreenTitles.email,
+                        hintText: SignupScreenTitles.emailHint,
                       ),
                       controller: emailTextController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Email is required';
+                          return SignupScreenTitles.emailRequired;
                         }
                         if (!EmailValidator.validate(value)) {
-                          return 'The Email is not valid';
+                          return SignupScreenTitles.emailInvalid;
                         }
                         return null;
                       },
@@ -224,8 +226,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              labelText: "Password",
-                              hintText: "Enter password",
+                              labelText: SignupScreenTitles.password,
+                              hintText: SignupScreenTitles.passwordHint,
                             ),
                             controller: passwordTextController,
                             obscureText: true,
@@ -234,7 +236,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Password is required';
+                                return SignupScreenTitles.passwordRequired;
                               }
 
                               final rules = PasswordValidators.defaultRules();
@@ -262,17 +264,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           child: TextFormField(
                             decoration: const InputDecoration(
-                              labelText: "Confirm password",
-                              hintText: "Confirm password",
+                              labelText: SignupScreenTitles.confirmPassword,
+                              hintText: SignupScreenTitles.confirmPasswordHint,
                             ),
                             controller: confirmPasswordTextController,
                             obscureText: true,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
-                                return 'Confirm password is required';
+                                return SignupScreenTitles
+                                    .confirmPasswordRequired;
                               }
                               if (value != passwordTextController.text) {
-                                return 'Password not matched';
+                                return SignupScreenTitles.passwordMismatch;
                               }
                               return null;
                             },
@@ -305,17 +308,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        labelText: "Phone number",
-                        hintText: "Enter your phone number",
+                        labelText: SignupScreenTitles.phone,
+                        hintText: SignupScreenTitles.phoneHint,
                       ),
                       controller: phoneTextController,
                       keyboardType: TextInputType.phone,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Phone number is required';
+                          return SignupScreenTitles.phoneRequired;
                         }
                         if (value.length < 11) {
-                          return 'Phone number is not valid';
+                          return SignupScreenTitles.phoneInvalid;
                         }
                         return null;
                       },
@@ -361,7 +364,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             );
                           },
-                          child: Text("Signup"),
+                          child: Text(SignupScreenTitles.signUp),
                         ),
                       );
                     },
@@ -371,8 +374,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Text("Already have an account? "),
-                      UnderlinedText(underlinedText: "Login"),
+                      Text(SignupScreenTitles.alreadyHaveAccount),
+                      UnderlinedText(underlinedText: SignupScreenTitles.login),
                     ],
                   ),
                 ],

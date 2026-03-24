@@ -15,7 +15,7 @@ import 'package:injectable/injectable.dart' as _i526;
 
 import '../../features/sign_up/api/data_sources/signup_data_sources_remote_impl.dart'
     as _i678;
-import '../../features/sign_up/api/signup_api_client/signup_api_client.dart'
+import '../../features/sign_up/api/api_client/signup_api_client.dart'
     as _i272;
 import '../../features/sign_up/data/data_sources/signup_data_sources_remote_contract.dart'
     as _i485;

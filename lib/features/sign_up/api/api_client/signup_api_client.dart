@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../../../config/values/endpoints.dart';
+import '../../../../core/values/endpoints.dart';
 import '../../data/models/signup_response.dart';
 import '../../domain/entities/user_created.dart';
 part 'signup_api_client.g.dart';

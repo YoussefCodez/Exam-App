@@ -12,9 +12,8 @@ class SignupViewModel extends Cubit<SignupStates> {
   final SignupUseCase _callSignupUseCase;
   SignupViewModel(this._callSignupUseCase) : super(SignupInitial());
 
-
-  void doEvent(SignupEvents event, UserCreated userCreated) async{
-    switch(event) {
+  void doEvent(SignupEvents event, UserCreated userCreated) async {
+    switch (event) {
       case AddUserEvent():
         await _addUser(user: userCreated);
     }
@@ -28,11 +27,9 @@ class SignupViewModel extends Cubit<SignupStates> {
     switch (response) {
       case SuccessBaseResponse<User>():
         emit(SignupSuccess(response.data));
-        print("Success");
 
       case ErrorBaseResponse<User>():
         emit(SignupError(response.message));
-        print("Failure");
     }
   }
 }

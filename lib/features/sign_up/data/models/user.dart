@@ -1,25 +1,26 @@
+import 'package:exam/core/values/sign_up/signup_user_titles.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:exam/features/sign_up/domain/entities/user.dart' as entity;
 part 'user.g.dart';
 @JsonSerializable()
 class User {
-  @JsonKey(name: "username")
+  @JsonKey(name: SignupUserTitles.username)
   String? username;
-  @JsonKey(name: "firstName")
+  @JsonKey(name: SignupUserTitles.firstName)
   String? firstName;
-  @JsonKey(name: "lastName")
+  @JsonKey(name: SignupUserTitles.lastName)
   String? lastName;
-  @JsonKey(name: "email")
+  @JsonKey(name: SignupUserTitles.email)
   String? email;
-  @JsonKey(name: "phone")
+  @JsonKey(name: SignupUserTitles.phone)
   String? phone;
-  @JsonKey(name: "role")
+  @JsonKey(name: SignupUserTitles.role)
   String? role;
-  @JsonKey(name: "isVerified")
+  @JsonKey(name: SignupUserTitles.isVerified)
   bool? isVerified;
-  @JsonKey(name: "_id")
+  @JsonKey(name: SignupUserTitles.id)
   String? id;
-  @JsonKey(name: "createdAt")
+  @JsonKey(name: SignupUserTitles.createdAt)
   DateTime? createdAt;
 
   User({

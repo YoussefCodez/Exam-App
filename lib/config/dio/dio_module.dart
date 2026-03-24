@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import '../values/endpoints.dart';
+import '../../core/values/endpoints.dart';
 
 @module
 abstract class DioModule {
