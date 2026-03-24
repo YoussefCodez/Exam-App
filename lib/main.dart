@@ -9,10 +9,12 @@ import 'package:exam/features/reset_password/presentation/screens/verification_s
 import 'package:exam/features/sign_up/presentation/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/themes/app_theme.dart';
 
 Future<void> main() async {
-  configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   final storage = getIt<FlutterSecureStorage>();
@@ -34,10 +36,11 @@ class MyApp extends StatelessWidget {
       create: (context) => getIt<LoginCubit>(),
       child: const LoginScreen(),
     ),
-    AppStrings.homeRoute: (context) => const HomeScreen(),    ResetScreen.routeName: (context) => const ResetScreen(),
+    AppStrings.homeRoute: (context) => const HomeScreen(),
+    ResetScreen.routeName: (context) => const ResetScreen(),
     VerificationScreen.routeName: (context) => VerificationScreen(),
     NewPasswordScreen.routeName: (context) => NewPasswordScreen(),
-      SignUpScreen.routeName: (context) => SignUpScreen(),
+    SignUpScreen.routeName: (context) => SignUpScreen(),
   };
 
   @override
@@ -48,7 +51,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         initialRoute: initialRoute,
-      routes: routes,
+        routes: routes,
       ),
     );
   }

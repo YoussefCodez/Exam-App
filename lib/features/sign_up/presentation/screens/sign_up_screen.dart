@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:exam/core/values/sign_up/signup_screen_titles.dart';
+import 'package:exam/features/login/presentation/screens/login_screen.dart';
 import 'package:exam/features/sign_up/presentation/view_model/states/signup_events.dart';
 import 'package:password_validator_mate/password_validator_mate.dart';
 import 'package:exam/core/themes/app_colors.dart';
@@ -107,9 +108,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             animateColor: false,
             shadowColor: Colors.transparent,
             elevation: 0.0,
-            leading: const Padding(
+            leading: Padding(
               padding: EdgeInsets.all(16.0),
-              child: Icon(Icons.arrow_back_ios),
+              child: InkWell(
+                child: Icon(Icons.arrow_back_ios),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
             ),
             title: const Text(SignupScreenTitles.signUp),
             titleSpacing: 0,
@@ -373,9 +379,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   /// LOGIN TEXT
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Text(SignupScreenTitles.alreadyHaveAccount),
-                      UnderlinedText(underlinedText: SignupScreenTitles.login),
+                      InkWell(
+                        child: UnderlinedText(
+                          underlinedText: SignupScreenTitles.login,
+                        ),
+                        onTap: () {
+                          Navigator.pushNamed(context, LoginScreen.routeName);
+                        },
+                      ),
                     ],
                   ),
                 ],

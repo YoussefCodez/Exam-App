@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:exam/config/values/endpoints.dart';
+import 'package:exam/core/values/endpoints.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
 import 'package:exam/features/login/data/models/user_model.dart';
 import 'package:injectable/injectable.dart';
