@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             passwordError = null;
                           });
                         } else if (state is LoginSuccess) {
-                          print("${AppStrings.loginSuccess}${state.user.name}");
+                          debugPrint("${AppStrings.loginSuccess}${state.user.name}");
                         } else if (state is LoginFailure) {
                           final msg = state.message.toLowerCase();
                           setState(() {

@@ -161,7 +161,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                       .trim(),
                                 );
 
-                                print(ForgotPasswordTitles.passwordUpdatedMessage);
+                                debugPrint(ForgotPasswordTitles.passwordUpdatedMessage);
                                 // show that password updated successfully then delay and go back to login
                               }
                             },

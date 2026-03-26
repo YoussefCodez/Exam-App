@@ -101,9 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: Colors.white,
           appBar: AppBar(
-            backgroundColor: Colors.white,
             surfaceTintColor: AppColors.darkBlue,
             animateColor: false,
             shadowColor: Colors.transparent,

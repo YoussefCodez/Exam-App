@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
 import 'package:exam/features/login/domain/entities/user_entity.dart';
@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 part '../states/login_state.dart';
 
 @injectable
-class LoginCubit extends Bloc<LoginEvents, LoginState> {
+class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase _loginUseCase;
   final FlutterSecureStorage _secureStorage;
   final SharedPreferences _sharedPreferences;
@@ -36,7 +36,7 @@ class LoginCubit extends Bloc<LoginEvents, LoginState> {
       case LoadSavedAccount():
         await _loadSavedAccount();
       case GetSavedEmail():
-        await _getSavedEmail();
+        _getSavedEmail();
     }
   }
 
@@ -72,9 +72,9 @@ class LoginCubit extends Bloc<LoginEvents, LoginState> {
   }
 
   Future<void> _loadSavedAccount() async {
-    final email = await _sharedPreferences.getString(AppStrings.savedEmailKey);
+    final email = _sharedPreferences.getString(AppStrings.savedEmailKey);
     final isRemembered =
-        await _sharedPreferences.getBool(AppStrings.rememberMeKey) ?? false;
+        _sharedPreferences.getBool(AppStrings.rememberMeKey) ?? false;
     if (isRemembered && email != null) {
       rememberMe = true;
     }

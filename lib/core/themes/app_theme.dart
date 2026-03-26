@@ -3,6 +3,8 @@ import 'package:exam/core/app_colors/app_colors.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: AppColors.white,
+    appBarTheme: AppBarTheme(backgroundColor: AppColors.white),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0.0,
@@ -36,8 +38,6 @@ class AppTheme {
         color: AppColors.black,
       ),
     ),
-
-    appBarTheme: AppBarTheme(elevation: 0.0, foregroundColor: AppColors.black),
 
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
