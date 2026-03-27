@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:exam/config/di/di.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
+import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:exam/features/home/home_screen.dart';
 import 'package:exam/features/login/presentation/screens/login_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
@@ -11,18 +14,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:exam/config/hive/hive_setup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/themes/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await HiveSetup.init();
   await configureDependencies();
+  final path = Directory.current.path;
   final storage = getIt<FlutterSecureStorage>();
   final prefs = getIt<SharedPreferences>();
   final String? token = await storage.read(key: AppStrings.tokenKey);
   final bool rememberMe = prefs.getBool(AppStrings.rememberMeKey) ?? false;
   final String initialRoute = (token != null && rememberMe)
-      ? AppStrings.homeRoute
+      ? AppStrings.examRoute
       : AppStrings.loginRoute;
   runApp(MyApp(initialRoute: initialRoute));
 }
@@ -41,6 +47,7 @@ class MyApp extends StatelessWidget {
     VerificationScreen.routeName: (context) => VerificationScreen(),
     NewPasswordScreen.routeName: (context) => NewPasswordScreen(),
     SignUpScreen.routeName: (context) => SignUpScreen(),
+    ExamScreen.routeName: (context) => ExamScreen(),
   };
 
   @override

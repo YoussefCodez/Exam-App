@@ -15,6 +15,19 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
+import '../../core/network/network_info.dart' as _i892;
+import '../../features/exam/api/local_data_source/exam_local_data_source.dart'
+    as _i628;
+import '../../features/exam/api/remote_data_source/exam_api_client.dart'
+    as _i304;
+import '../../features/exam/data/repositories/get_all_questions_impl.dart'
+    as _i303;
+import '../../features/exam/domain/repositories/get_all_questions_contract.dart'
+    as _i968;
+import '../../features/exam/domain/use_cases/get_all_questions_use_case.dart'
+    as _i728;
+import '../../features/exam/presentation/view_models/cubits/get_all_questions_cubit.dart'
+    as _i455;
 import '../../features/login/api/data_sources/login_api_client.dart' as _i519;
 import '../../features/login/api/data_sources/login_data_source_remote_impl.dart'
     as _i593;
@@ -51,6 +64,7 @@ import '../../features/sign_up/domain/use_cases/signup_use_case.dart' as _i254;
 import '../../features/sign_up/presentation/view_model/cubit/signup_view_model.dart'
     as _i774;
 import '../dio/dio_module.dart' as _i977;
+import '../dio/token_interceptor.dart' as _i534;
 import '../secure_storage/secure_storage_module.dart' as _i582;
 import '../shared_preferences/shared_preferences_module.dart' as _i896;
 
@@ -62,16 +76,26 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final sharedPreferencesModule = _$SharedPreferencesModule();
-    final dioModule = _$DioModule();
     final secureStorageModule = _$SecureStorageModule();
+    final dioModule = _$DioModule();
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => sharedPreferencesModule.sharedPrefs,
       preResolve: true,
     );
-    gh.lazySingleton<_i361.Dio>(() => dioModule.dio());
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => secureStorageModule.secureStorage,
     );
+    gh.factory<_i534.TokenInterceptor>(
+      () => _i534.TokenInterceptor(gh<_i558.FlutterSecureStorage>()),
+    );
+    gh.factory<_i892.NetworkInfo>(() => _i892.NetworkInfoImpl());
+    gh.lazySingleton<_i361.Dio>(
+      () => dioModule.dio(gh<_i534.TokenInterceptor>()),
+    );
+    gh.factory<_i628.ExamLocalDataSource>(
+      () => _i628.ExamLocalDataSourceImpl(),
+    );
+    gh.factory<_i304.ExamApiClient>(() => _i304.ExamApiClient(gh<_i361.Dio>()));
     gh.factory<_i519.LoginApiClient>(
       () => _i519.LoginApiClient(gh<_i361.Dio>()),
     );
@@ -79,9 +103,21 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i711.ForgotPasswordApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i6.SignupApiClient>(() => _i6.SignupApiClient(gh<_i361.Dio>()));
+    gh.factory<_i968.GetAllQuestionsContract>(
+      () => _i303.GetAllQuestionsImpl(
+        examApiClient: gh<_i304.ExamApiClient>(),
+        localDataSource: gh<_i628.ExamLocalDataSource>(),
+        networkInfo: gh<_i892.NetworkInfo>(),
+      ),
+    );
     gh.factory<_i458.ForgotPasswordDataSourcesContract>(
       () => _i406.ForgotPasswordDataSourcesImpl(
         gh<_i711.ForgotPasswordApiClient>(),
+      ),
+    );
+    gh.factory<_i728.GetAllQuestionsUseCase>(
+      () => _i728.GetAllQuestionsUseCase(
+        getAllQuestionsContract: gh<_i968.GetAllQuestionsContract>(),
       ),
     );
     gh.factory<_i804.LoginDataSourceRemoteContract>(
@@ -89,6 +125,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i485.SignupDataSourcesRemoteContract>(
       () => _i678.SignupDataSourcesRemoteImpl(gh<_i6.SignupApiClient>()),
+    );
+    gh.factory<_i455.GetAllQuestionsCubit>(
+      () => _i455.GetAllQuestionsCubit(
+        getAllQuestionsUseCase: gh<_i728.GetAllQuestionsUseCase>(),
+      ),
     );
     gh.factory<_i961.LoginRepoContract>(
       () => _i546.LoginRepoImpl(
@@ -131,6 +172,6 @@ extension GetItInjectableX on _i174.GetIt {
 
 class _$SharedPreferencesModule extends _i896.SharedPreferencesModule {}
 
-class _$DioModule extends _i977.DioModule {}
-
 class _$SecureStorageModule extends _i582.SecureStorageModule {}
+
+class _$DioModule extends _i977.DioModule {}

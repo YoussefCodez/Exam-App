@@ -2,6 +2,7 @@ class AppStrings {
   // Routes
   static const String homeRoute = '/home';
   static const String loginRoute = '/login';
+  static const String examRoute = '/exam';
 
   // Storage Keys
   static const String tokenKey = 'tokenKey';
