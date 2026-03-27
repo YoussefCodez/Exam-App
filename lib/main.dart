@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:exam/config/di/di.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
@@ -22,7 +20,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveSetup.init();
   await configureDependencies();
-  final path = Directory.current.path;
   final storage = getIt<FlutterSecureStorage>();
   final prefs = getIt<SharedPreferences>();
   final String? token = await storage.read(key: AppStrings.tokenKey);
