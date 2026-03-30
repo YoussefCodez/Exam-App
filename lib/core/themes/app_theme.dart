@@ -1,5 +1,6 @@
+import 'package:exam/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:exam/core/app_colors/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
@@ -18,27 +19,41 @@ class AppTheme {
 
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 20,
+        fontSize: 20.sp,
         fontWeight: FontWeight(500),
         color: AppColors.black,
       ),
       titleMedium: TextStyle(
-        fontSize: 18,
+        fontSize: 18.sp,
         fontWeight: FontWeight(500),
         color: AppColors.black,
       ), // // Appbar title
       bodyMedium: TextStyle(
-        fontSize: 16,
+        fontSize: 16.sp,
         fontWeight: FontWeight(400),
         color: AppColors.black,
       ),
       bodySmall: TextStyle(
-        fontSize: 14,
+        fontSize: 14.sp,
         fontWeight: FontWeight(400),
         color: AppColors.black,
       ),
+      headlineSmall: TextStyle(
+        fontWeight: .w500,
+        fontSize: 14.sp,
+        color: AppColors.grey,
+      ),
+      headlineLarge: TextStyle(
+        fontWeight: .w500,
+        fontSize: 18.sp,
+        color: AppColors.black,
+      ),
+      labelMedium: TextStyle(
+        fontSize: 14.sp,
+        fontWeight: .w400,
+        color: AppColors.black
+      )
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
       floatingLabelStyle: TextStyle(

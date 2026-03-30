@@ -14,13 +14,15 @@ class GetAllQuestionsCubit extends Cubit<GetAllQuestionsState> {
   GetAllQuestionsCubit({required this.getAllQuestionsUseCase}) : super(GetAllQuestionsInitial());
 
   void doEvent(GetAllQuestionsEvent event) {
-    getAllQuestions();
+    if (event is GetAllQuestions) {
+      getAllQuestions(event.id);
+    }
   }
 
-  Future<void> getAllQuestions() async {
+  Future<void> getAllQuestions(String id) async {
     emit(GetAllQuestionsLoading());
     try {
-      final result = await getAllQuestionsUseCase.call();
+      final result = await getAllQuestionsUseCase.call(id);
       if (result is SuccessBaseResponse<List<QuestionEntity>>) {
         emit(GetAllQuestionsSuccess(result.data));
       } else  if (result is ErrorBaseResponse){

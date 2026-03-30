@@ -13,5 +13,7 @@ abstract class ExamApiClient {
   factory ExamApiClient(Dio dio) = _ExamApiClient;
 
   @GET(Endpoints.getQuestionsUrl)
-  Future<QuestionsExamModel> getQuestions();
+  Future<QuestionsExamModel> getQuestions(
+    @Query("exam") String id
+  );
 }

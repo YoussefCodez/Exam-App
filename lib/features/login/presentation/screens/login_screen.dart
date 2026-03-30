@@ -1,5 +1,5 @@
-import 'package:exam/core/app_colors/app_colors.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
+import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
 import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
@@ -123,7 +123,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             passwordError = null;
                           });
                         } else if (state is LoginSuccess) {
-                          print("${AppStrings.loginSuccess}${state.user.name}${state.user.token}");
                           Navigator.pushNamed(context, ExamScreen.routeName);
                         } else if (state is LoginFailure) {
                           final msg = state.message.toLowerCase();

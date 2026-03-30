@@ -23,4 +23,15 @@ class AppStrings {
   static const String loginButton = 'Login';
   static const String dontHaveAccount = "Don't have an account? ";
   static const String signUp = 'Sign Up';
+
+  //Exam Strings
+  static const String exam = 'Exam';
+  static const String exitExam = 'Exit Exam';
+  static const String exitExamContent = 'Are you sure you want to exit? Your answers will be deleted.';
+  static const String cancel = 'Cancel';
+  static const String yes = 'Yes';
+  static const String next = 'Next';
+  static const String back = 'Back';
+  static const String singleChoice = 'single_choice';
+  
 }

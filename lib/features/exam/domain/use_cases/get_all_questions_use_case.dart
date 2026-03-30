@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 class GetAllQuestionsUseCase {
   final GetAllQuestionsContract getAllQuestionsContract;
   GetAllQuestionsUseCase({required this.getAllQuestionsContract});
-  Future<BaseResponse<List<QuestionEntity>>> call() {
-    return getAllQuestionsContract.getAllQuestions();
+  Future<BaseResponse<List<QuestionEntity>>> call(String id) {
+    return getAllQuestionsContract.getAllQuestions(id);
   }
 }

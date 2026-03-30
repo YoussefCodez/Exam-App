@@ -21,11 +21,11 @@ class GetAllQuestionsImpl implements GetAllQuestionsContract {
   });
 
   @override
-  Future<BaseResponse<List<QuestionEntity>>> getAllQuestions() async {
+  Future<BaseResponse<List<QuestionEntity>>> getAllQuestions(String id) async {
     if (await networkInfo.isConnected) {
       try {
         if (await localDataSource.getCachedQuestions() != null) {
-          final responseModel = await examApiClient.getQuestions();
+          final responseModel = await examApiClient.getQuestions(id);
           await localDataSource.cacheQuestions(responseModel);
 
           final resultEntity = responseModel.toEntity();
@@ -34,7 +34,7 @@ class GetAllQuestionsImpl implements GetAllQuestionsContract {
             message: resultEntity.message,
           );
         } else {
-          final responseModel = await examApiClient.getQuestions();
+          final responseModel = await examApiClient.getQuestions(id);
         await localDataSource.cacheQuestions(responseModel);
 
         final resultEntity = responseModel.toEntity();
