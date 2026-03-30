@@ -11,4 +11,5 @@ sealed class DioExceptionErrors {
   static const String cancel = 'Connection timeout';
   static const String badResponse = 'Connection timeout';
   static const String unknown = 'Connection timeout';
+  static const String tokenExpired = 'Token Expired , Please Login Again';
 }

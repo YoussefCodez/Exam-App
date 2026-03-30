@@ -23,6 +23,7 @@ Future<void> main() async {
   final storage = getIt<FlutterSecureStorage>();
   final prefs = getIt<SharedPreferences>();
   final String? token = await storage.read(key: AppStrings.tokenKey);
+  debugPrint(token);
   final bool rememberMe = prefs.getBool(AppStrings.rememberMeKey) ?? false;
   final String initialRoute = (token != null && rememberMe)
       ? AppStrings.examRoute
@@ -32,6 +33,8 @@ Future<void> main() async {
 
 // ignore: must_be_immutable
 class MyApp extends StatelessWidget {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      GlobalKey<NavigatorState>();
   final String initialRoute;
   MyApp({super.key, required this.initialRoute});
   final Map<String, WidgetBuilder> routes = {
@@ -52,6 +55,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (context, child) => MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
         initialRoute: initialRoute,

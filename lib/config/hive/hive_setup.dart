@@ -1,5 +1,4 @@
-import 'dart:io';
-import 'package:hive_ce/hive.dart';
+import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 import 'package:exam/features/exam/data/models/answer_model.dart';
 import 'package:exam/features/exam/data/models/exam_model.dart';
 import 'package:exam/features/exam/data/models/question_model.dart';
@@ -7,8 +6,7 @@ import 'package:exam/features/exam/data/models/questions_exam_model.dart';
 
 class HiveSetup {
   static Future<void> init() async {
-    final path = Directory.current.path;
-    Hive.init(path);
+    await Hive.initFlutter();
     
     // Register Adapters
     Hive.registerAdapter(QuestionsExamModelAdapter());

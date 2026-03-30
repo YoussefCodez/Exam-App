@@ -1,4 +1,5 @@
 import 'package:exam/config/di/di.dart';
+import 'package:exam/config/dio/token_interceptor.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/exam/presentation/view_models/cubits/get_all_questions_cubit.dart';
 import 'package:exam/features/exam/presentation/view_models/states/get_all_questions_event.dart';
@@ -11,6 +12,8 @@ class ExamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tokenInterceptor = getIt<TokenInterceptor>();
+    print(tokenInterceptor.storage.read(key: AppStrings.tokenKey));
     return Scaffold(
       body: BlocProvider(
         create: (context) => getIt<GetAllQuestionsCubit>()..doEvent(GetAllQuestions()),

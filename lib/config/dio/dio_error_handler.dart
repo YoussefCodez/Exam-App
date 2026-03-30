@@ -4,9 +4,15 @@ import 'package:exam/core/values/dio_exception_errors.dart';
 class DioErrorHandler {
   static String handle(DioException e) {
     if (e.response != null) {
-      return e.response?.data?[DioExceptionErrors.message] ??
-          e.response?.statusMessage ??
-          DioExceptionErrors.serverError;
+      final statusCode = getStatusCode(e);
+      switch(statusCode) {
+        case 401:
+          return DioExceptionErrors.tokenExpired;
+        default:
+          return e.response?.data?[DioExceptionErrors.message] ??
+              e.response?.statusMessage ??
+              DioExceptionErrors.serverError;
+      }
     } else {
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
@@ -31,5 +37,9 @@ class DioErrorHandler {
 
   static int? getStatusCode(DioException e) {
     return e.response?.statusCode;
+  }
+
+  static bool? isTokenExpired(DioException e) {
+    return getStatusCode(e) == 401;
   }
 }
