@@ -26,6 +26,8 @@ class AppStrings {
 
   //Exam Strings
   static const String exam = 'Exam';
+  static const String question = 'Question';
+  static const String of = 'of';
   static const String exitExam = 'Exit Exam';
   static const String exitExamContent = 'Are you sure you want to exit? Your answers will be deleted.';
   static const String cancel = 'Cancel';
@@ -33,5 +35,14 @@ class AppStrings {
   static const String next = 'Next';
   static const String back = 'Back';
   static const String singleChoice = 'single_choice';
-  
+  static const String timeIsOut = "Time's Out!!";
+  static const String viewScore = "View Score";
+  static const String examResult = 'Exam Result';
+  static const String examScore = 'Exam Score';
+  static const String yourScore = 'Your Score';
+  static const String correct = 'Correct';
+  static const String incorrect = 'Incorrect';
+  static const String backToExams = 'Back to Exams';
+  static const String finish = 'Finish';
+  static const String startAgain = 'Start Again';
 }
