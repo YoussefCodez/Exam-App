@@ -9,6 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../explore/presentation/screens/explore_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   static const routeName = AppStrings.loginRoute;
   const LoginScreen({super.key});
@@ -122,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             passwordError = null;
                           });
                         } else if (state is LoginSuccess) {
-                          debugPrint("${AppStrings.loginSuccess}${state.user.name}");
+                          Navigator.pushNamed(context, ExploreScreen.routeName);
                         } else if (state is LoginFailure) {
                           final msg = state.message.toLowerCase();
                           setState(() {

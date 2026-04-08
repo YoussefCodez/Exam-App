@@ -1,5 +1,7 @@
 import 'package:exam/config/di/di.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
+import 'package:exam/features/explore/presentation/screens/explore_screen.dart';
+import 'package:exam/features/explore/presentation/screens/subject_screen.dart';
 import 'package:exam/features/home/home_screen.dart';
 import 'package:exam/features/login/presentation/screens/login_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
     VerificationScreen.routeName: (context) => VerificationScreen(),
     NewPasswordScreen.routeName: (context) => NewPasswordScreen(),
     SignUpScreen.routeName: (context) => SignUpScreen(),
+    ExploreScreen.routeName: (context) =>  ExploreScreen(),
+    SubjectScreen.routeName: (context) => const SubjectScreen(),
   };
 
   @override
@@ -50,7 +54,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        initialRoute: initialRoute,
+        initialRoute: ExploreScreen.routeName,
         routes: routes,
       ),
     );
