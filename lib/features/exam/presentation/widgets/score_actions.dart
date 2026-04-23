@@ -1,11 +1,16 @@
 import 'package:exam/features/exam/presentation/widgets/action_button.dart';
+import 'package:exam/features/result/presentation/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/app_strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
 
-class BackToExamsButton extends StatelessWidget {
-  const BackToExamsButton({super.key});
+import 'package:exam/features/result/domain/entities/result_item_entity.dart';
+
+class ScoreActions extends StatelessWidget {
+  final List<ResultItemEntity> results;
+
+  const ScoreActions({super.key, required this.results});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,11 @@ class BackToExamsButton extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                //TODO: Navigate to result screen
+                Navigator.pushNamed(
+                  context, 
+                  ResultScreen.routeName, 
+                  arguments: results,
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.blue,
@@ -27,14 +36,18 @@ class BackToExamsButton extends StatelessWidget {
                 ),
               ),
               child: const Text(
-                AppStrings.backToExams,
+                AppStrings.showResults,
                 style: TextStyle(color: Colors.white),
               ),
             ),
           ),
           SizedBox(height: 24.h),
           ActionButton(
-            onTap: () => Navigator.pushNamedAndRemoveUntil(context, AppStrings.examRoute, (route) => false),
+            onTap: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppStrings.examRoute,
+              (route) => false,
+            ),
             text: AppStrings.startAgain,
             isOutline: true,
           ),

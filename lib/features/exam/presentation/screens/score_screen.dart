@@ -1,24 +1,30 @@
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/themes/app_colors.dart';
-import 'package:exam/features/exam/presentation/widgets/back_to_exams_button.dart';
+import 'package:exam/features/exam/presentation/widgets/score_actions.dart';
 import 'package:exam/features/exam/presentation/widgets/score_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:exam/features/result/domain/entities/result_item_entity.dart';
+
 class ScoreScreen extends StatelessWidget {
   final int totalQuestions;
   final int correctAnswers;
+  final List<ResultItemEntity> results;
 
   const ScoreScreen({
     super.key,
     required this.totalQuestions,
     required this.correctAnswers,
+    required this.results,
   });
 
   @override
   Widget build(BuildContext context) {
     final wrongAnswers = totalQuestions - correctAnswers;
-    final percentage = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0.0;
+    final percentage = totalQuestions > 0
+        ? (correctAnswers / totalQuestions) * 100
+        : 0.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +58,7 @@ class ScoreScreen extends StatelessWidget {
               wrongCount: wrongAnswers,
             ),
             SizedBox(height: 80.h),
-            const BackToExamsButton(),
+            ScoreActions(results: results),
             SizedBox(height: 24.h),
           ],
         ),

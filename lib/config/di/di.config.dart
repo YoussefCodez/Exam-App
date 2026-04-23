@@ -56,6 +56,16 @@ import '../../features/reset_password/domain/use_cases/forgot_password_use_case.
     as _i194;
 import '../../features/reset_password/presentation/view_model/cubit/reset_view_model.dart'
     as _i851;
+import '../../features/result/data/repositories/result_repository_impl.dart'
+    as _i806;
+import '../../features/result/domain/repositories/result_repository.dart'
+    as _i1000;
+import '../../features/result/domain/use_cases/get_past_exams_use_case.dart'
+    as _i1070;
+import '../../features/result/domain/use_cases/save_past_exam_use_case.dart'
+    as _i57;
+import '../../features/result/presentation/view_models/result_cubit/result_cubit.dart'
+    as _i582;
 import '../../features/sign_up/api/api_client/signup_api_client.dart' as _i6;
 import '../../features/sign_up/api/data_sources/signup_data_sources_remote_impl.dart'
     as _i678;
@@ -98,6 +108,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i628.ExamLocalDataSource>(
       () => _i628.ExamLocalDataSourceImpl(),
     );
+    gh.singleton<_i1000.ResultRepository>(() => _i806.ResultRepositoryImpl());
     gh.lazySingleton<_i1036.LoginApiClient>(
       () => _i1036.LoginApiClient(gh<_i361.Dio>()),
     );
@@ -117,6 +128,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i880.LoginLocalDataSource>(
       () => _i880.LoginLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
+    gh.factory<_i1070.GetPastExamsUseCase>(
+      () => _i1070.GetPastExamsUseCase(gh<_i1000.ResultRepository>()),
+    );
+    gh.factory<_i57.SavePastExamUseCase>(
+      () => _i57.SavePastExamUseCase(gh<_i1000.ResultRepository>()),
+    );
     gh.factory<_i968.GetAllQuestionsContract>(
       () => _i303.GetAllQuestionsImpl(
         examApiClient: gh<_i304.ExamApiClient>(),
@@ -135,6 +152,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i728.GetAllQuestionsUseCase>(
       () => _i728.GetAllQuestionsUseCase(
         getAllQuestionsContract: gh<_i968.GetAllQuestionsContract>(),
+      ),
+    );
+    gh.factory<_i582.ResultCubit>(
+      () => _i582.ResultCubit(
+        gh<_i1070.GetPastExamsUseCase>(),
+        gh<_i57.SavePastExamUseCase>(),
       ),
     );
     gh.factory<_i485.SignupDataSourcesRemoteContract>(

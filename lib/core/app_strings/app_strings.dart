@@ -45,4 +45,8 @@ class AppStrings {
   static const String backToExams = 'Back to Exams';
   static const String finish = 'Finish';
   static const String startAgain = 'Start Again';
+
+  //Result Strings
+  static const String showResults = 'Show Results';
+  static const String answers = 'Answers';
 }

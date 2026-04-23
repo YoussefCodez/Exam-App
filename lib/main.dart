@@ -7,6 +7,8 @@ import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.
 import 'package:exam/features/reset_password/presentation/screens/new_password_screen.dart';
 import 'package:exam/features/reset_password/presentation/screens/forgot_password_screen.dart';
 import 'package:exam/features/reset_password/presentation/screens/verification_screen.dart';
+import 'package:exam/features/result/presentation/screens/main_result_screen.dart';
+import 'package:exam/features/result/presentation/screens/result_screen.dart';
 import 'package:exam/features/sign_up/presentation/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +50,8 @@ class MyApp extends StatelessWidget {
     NewPasswordScreen.routeName: (context) => NewPasswordScreen(),
     SignUpScreen.routeName: (context) => SignUpScreen(),
     ExamScreen.routeName: (context) => ExamScreen(),
+    ResultScreen.routeName: (context) => ResultScreen(),
+    MainResultScreen.routeName: (context) => MainResultScreen(),
   };
 
   @override
