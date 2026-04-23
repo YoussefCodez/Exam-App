@@ -1,6 +1,7 @@
+import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
-import 'package:exam/features/login/domain/entities/user_entity.dart';
+import 'package:exam/features/login/domain/entities/login_result_entity.dart';
 
-abstract class LoginRepoContract {
-  Future<UserEntity> login(LoginRequest loginRequest);
+abstract interface class LoginRepoContract {
+  Future<BaseResponse<LoginResultEntity>> login(LoginRequest loginRequest);
 }

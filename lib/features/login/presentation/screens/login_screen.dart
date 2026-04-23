@@ -3,8 +3,11 @@ import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
 import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
-import 'package:exam/features/reset_password/presentation/screens/forgot_password_screen.dart';
-import 'package:exam/features/sign_up/presentation/screens/sign_up_screen.dart';
+import 'package:exam/features/login/presentation/widgets/dont_have_account_section.dart';
+import 'package:exam/features/login/presentation/widgets/login_button.dart';
+import 'package:exam/features/login/presentation/widgets/login_email_field.dart';
+import 'package:exam/features/login/presentation/widgets/login_password_field.dart';
+import 'package:exam/features/login/presentation/widgets/remember_me_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -13,184 +16,119 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LoginScreen extends StatefulWidget {
   static const routeName = AppStrings.loginRoute;
   const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> _formKey = .new();
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
 
-  String? emailError;
-  String? passwordError;
+  final ValueNotifier<String?> _emailErrorNotifier = ValueNotifier<String?>(null);
+  final ValueNotifier<String?> _passwordErrorNotifier = ValueNotifier<String?>(null);
 
   @override
   void initState() {
     super.initState();
-    emailController = .new();
-    passwordController = .new();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _emailErrorNotifier.dispose();
+    _passwordErrorNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final loginCubit = context.watch<LoginCubit>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(AppStrings.login, style: theme.textTheme.titleLarge),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  children: [
-                    Gap(24.h),
-                    TextFormField(
-                      controller: emailController,
-                      onChanged: (value) {
-                        if (emailError != null)
-                          setState(() => emailError = null);
-                      },
-                      decoration: InputDecoration(
-                        hintText: AppStrings.enterEmail,
-                        labelText: AppStrings.email,
-                        errorText: emailError,
-                      ),
-                    ),
-                    Gap(24.h),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: true,
-                      onChanged: (value) {
-                        if (passwordError != null)
-                          setState(() => passwordError = null);
-                      },
-                      decoration: InputDecoration(
-                        hintText: AppStrings.enterPassword,
-                        labelText: AppStrings.password,
-                        errorText: passwordError,
-                      ),
-                    ),
-                    Gap(15.h),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: loginCubit.rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              loginCubit.doEvent(
-                                ToggleRememberMe(),
-                                value: value ?? false,
-                              );
-                            });
-                          },
-                        ),
-                        const Text(AppStrings.rememberMe),
-                        const Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, ResetScreen.routeName);
-                          },
-                          child: const Text(
-                            AppStrings.forgotPassword,
-                            style: TextStyle(
-                              color: AppColors.black,
-                              decoration: .underline,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Gap(24.h),
-                    BlocConsumer<LoginCubit, LoginState>(
-                      listener: (context, state) {
-                        if (state is LoginLoading) {
-                          setState(() {
-                            emailError = null;
-                            passwordError = null;
-                          });
-                        } else if (state is LoginSuccess) {
-                          Navigator.pushNamed(context, ExamScreen.routeName);
-                        } else if (state is LoginFailure) {
-                          final msg = state.message.toLowerCase();
-                          setState(() {
-                            if (msg.contains(AppStrings.emailLabel)) {
-                              emailError = state.message;
-                            } else if (msg.contains(AppStrings.passwordLabel)) {
-                              passwordError = state.message;
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(state.message),
-                                  backgroundColor: AppColors.error,
-                                ),
-                              );
-                            }
-                          });
-                        }
-                      },
-                      builder: (context, state) {
-                        return state is LoginLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    if (!_formKey.currentState!.validate()) {
-                                      return;
-                                    }
-                                    context.read<LoginCubit>().doEvent(
-                                      Login(),
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                    );
-                                  },
-                                  child: const Text(AppStrings.loginButton),
-                                ),
-                              );
-                      },
-                    ),
-                    Gap(15.h),
-                    Row(
-                      mainAxisAlignment: .center,
-                      children: [
-                        const Text(AppStrings.dontHaveAccount),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              SignUpScreen.routeName,
-                            );
-                          },
-                          child: Text(
-                            AppStrings.signUp,
-                            style: TextStyle(
-                              color: AppColors.blue,
-                              decoration: .underline,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+      body: BlocListener<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginLoading) {
+            _emailErrorNotifier.value = null;
+            _passwordErrorNotifier.value = null;
+          } else if (state is LoginSuccess) {
+            Navigator.pushReplacementNamed(context, ExamScreen.routeName);
+          } else if (state is LoginFailure) {
+            final msg = state.message.toLowerCase();
+            if (msg.contains(AppStrings.emailLabel.toLowerCase())) {
+              _emailErrorNotifier.value = state.message;
+            } else if (msg.contains(AppStrings.passwordLabel.toLowerCase())) {
+              _passwordErrorNotifier.value = state.message;
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                  backgroundColor: AppColors.error,
                 ),
+              );
+            }
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Gap(24.h),
+                  ValueListenableBuilder<String?>(
+                    valueListenable: _emailErrorNotifier,
+                    builder: (context, error, _) {
+                      return LoginEmailField(
+                        controller: _emailController,
+                        errorText: error,
+                        onChanged: (_) {
+                          if (error != null) _emailErrorNotifier.value = null;
+                        },
+                      );
+                    },
+                  ),
+                  Gap(24.h),
+                  ValueListenableBuilder<String?>(
+                    valueListenable: _passwordErrorNotifier,
+                    builder: (context, error, _) {
+                      return LoginPasswordField(
+                        controller: _passwordController,
+                        errorText: error,
+                        onChanged: (_) {
+                          if (error != null) _passwordErrorNotifier.value = null;
+                        },
+                      );
+                    },
+                  ),
+                  Gap(15.h),
+                  const RememberMeSection(),
+                  Gap(24.h),
+                  LoginButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<LoginCubit>().doEvent(
+                          Login(),
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                      }
+                    },
+                  ),
+                  Gap(15.h),
+                  const DontHaveAccountSection(),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

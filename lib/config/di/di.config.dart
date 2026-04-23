@@ -28,9 +28,12 @@ import '../../features/exam/domain/use_cases/get_all_questions_use_case.dart'
     as _i728;
 import '../../features/exam/presentation/view_models/cubits/get_all_questions_cubit.dart'
     as _i455;
-import '../../features/login/api/data_sources/login_api_client.dart' as _i519;
-import '../../features/login/api/data_sources/login_data_source_remote_impl.dart'
-    as _i593;
+import '../../features/login/api/local_data_source/login_local_data_source.dart'
+    as _i308;
+import '../../features/login/api/remote_data_sources/login_api_client.dart'
+    as _i1036;
+import '../../features/login/api/remote_data_sources/login_data_source_remote_impl.dart'
+    as _i743;
 import '../../features/login/data/repositories/login_data_source_remote_contract.dart'
     as _i804;
 import '../../features/login/data/repositories/login_repo_impl.dart' as _i546;
@@ -95,20 +98,34 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i628.ExamLocalDataSource>(
       () => _i628.ExamLocalDataSourceImpl(),
     );
-    gh.factory<_i304.ExamApiClient>(() => _i304.ExamApiClient(gh<_i361.Dio>()));
-    gh.factory<_i519.LoginApiClient>(
-      () => _i519.LoginApiClient(gh<_i361.Dio>()),
+    gh.lazySingleton<_i1036.LoginApiClient>(
+      () => _i1036.LoginApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i304.ExamApiClient>(() => _i304.ExamApiClient(gh<_i361.Dio>()));
     gh.factory<_i711.ForgotPasswordApiClient>(
       () => _i711.ForgotPasswordApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i6.SignupApiClient>(() => _i6.SignupApiClient(gh<_i361.Dio>()));
+    gh.factory<_i804.LoginDataSourceRemoteContract>(
+      () => _i743.LoginDataSourceRemoteImpl(gh<_i1036.LoginApiClient>()),
+    );
+    gh.factory<_i961.LoginRepoContract>(
+      () => _i546.LoginRepoImpl(
+        loginDataSourceRemote: gh<_i804.LoginDataSourceRemoteContract>(),
+      ),
+    );
+    gh.factory<_i308.LoginLocalDataSource>(
+      () => _i308.LoginLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    );
     gh.factory<_i968.GetAllQuestionsContract>(
       () => _i303.GetAllQuestionsImpl(
         examApiClient: gh<_i304.ExamApiClient>(),
         localDataSource: gh<_i628.ExamLocalDataSource>(),
         networkInfo: gh<_i892.NetworkInfo>(),
       ),
+    );
+    gh.factory<_i191.LoginUseCase>(
+      () => _i191.LoginUseCase(gh<_i961.LoginRepoContract>()),
     );
     gh.factory<_i458.ForgotPasswordDataSourcesContract>(
       () => _i406.ForgotPasswordDataSourcesImpl(
@@ -120,9 +137,6 @@ extension GetItInjectableX on _i174.GetIt {
         getAllQuestionsContract: gh<_i968.GetAllQuestionsContract>(),
       ),
     );
-    gh.factory<_i804.LoginDataSourceRemoteContract>(
-      () => _i593.LoginDataSourceRemoteImpl(gh<_i519.LoginApiClient>()),
-    );
     gh.factory<_i485.SignupDataSourcesRemoteContract>(
       () => _i678.SignupDataSourcesRemoteImpl(gh<_i6.SignupApiClient>()),
     );
@@ -131,9 +145,11 @@ extension GetItInjectableX on _i174.GetIt {
         getAllQuestionsUseCase: gh<_i728.GetAllQuestionsUseCase>(),
       ),
     );
-    gh.factory<_i961.LoginRepoContract>(
-      () => _i546.LoginRepoImpl(
-        loginDataSourceRemote: gh<_i804.LoginDataSourceRemoteContract>(),
+    gh.factory<_i753.LoginCubit>(
+      () => _i753.LoginCubit(
+        gh<_i191.LoginUseCase>(),
+        gh<_i558.FlutterSecureStorage>(),
+        gh<_i308.LoginLocalDataSource>(),
       ),
     );
     gh.factory<_i339.SignupRepoContract>(
@@ -147,21 +163,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i194.ForgotPasswordUseCase>(
       () => _i194.ForgotPasswordUseCase(gh<_i546.ForgotPasswordRepoContract>()),
     );
-    gh.factory<_i191.LoginUseCase>(
-      () => _i191.LoginUseCase(gh<_i961.LoginRepoContract>()),
-    );
     gh.factory<_i254.SignupUseCase>(
       () => _i254.SignupUseCase(gh<_i339.SignupRepoContract>()),
     );
     gh.factory<_i851.ResetViewModel>(
       () => _i851.ResetViewModel(gh<_i194.ForgotPasswordUseCase>()),
-    );
-    gh.factory<_i753.LoginCubit>(
-      () => _i753.LoginCubit(
-        gh<_i191.LoginUseCase>(),
-        gh<_i558.FlutterSecureStorage>(),
-        gh<_i460.SharedPreferences>(),
-      ),
     );
     gh.factory<_i774.SignupViewModel>(
       () => _i774.SignupViewModel(gh<_i254.SignupUseCase>()),

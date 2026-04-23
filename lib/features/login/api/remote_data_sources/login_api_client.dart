@@ -7,12 +7,12 @@ import 'package:retrofit/retrofit.dart';
 
 part 'login_api_client.g.dart';
 
-@injectable
+@lazySingleton
 @RestApi(baseUrl: Endpoints.baseUrl)
 abstract class LoginApiClient {
   @factoryMethod
   factory LoginApiClient(Dio dio) = _LoginApiClient;
 
   @POST(Endpoints.loginUrl)
-  Future<UserModel> login(@Body() LoginRequest loginRequest);
+  Future<LoginResponse> login(@Body() LoginRequest loginRequest);
 }
