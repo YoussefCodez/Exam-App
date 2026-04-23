@@ -7,6 +7,7 @@ import 'package:exam/features/exam/data/models/answer_model.dart';
 import 'package:exam/features/exam/data/models/exam_model.dart';
 import 'package:exam/features/exam/data/models/question_model.dart';
 import 'package:exam/features/exam/data/models/questions_exam_model.dart';
+import 'package:exam/features/exam/data/models/subject_model.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
@@ -14,6 +15,7 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(ExamModelAdapter());
     registerAdapter(QuestionModelAdapter());
     registerAdapter(QuestionsExamModelAdapter());
+    registerAdapter(SubjectModelAdapter());
   }
 }
 
@@ -23,5 +25,6 @@ extension IsolatedHiveRegistrar on IsolatedHiveInterface {
     registerAdapter(ExamModelAdapter());
     registerAdapter(QuestionModelAdapter());
     registerAdapter(QuestionsExamModelAdapter());
+    registerAdapter(SubjectModelAdapter());
   }
 }

@@ -48,6 +48,11 @@ class _QuestionWidgetState extends State<QuestionWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<AnswerNumberCubit, int>(
       builder: (context, questionNumber) {
+        if (widget.questions.isEmpty) {
+          return const Center(
+            child: Text("No questions available"),
+          );
+        }
         final question = widget.questions[questionNumber];
         return Padding(
           padding: REdgeInsets.symmetric(horizontal: 16),

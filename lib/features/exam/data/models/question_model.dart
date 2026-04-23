@@ -1,3 +1,4 @@
+import 'package:exam/features/exam/data/models/subject_model.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -32,7 +33,7 @@ class QuestionModel {
 
   @HiveField(11)
   @JsonKey(name: "subject")
-  final String? subject;
+  final SubjectModel? subject;
 
   @HiveField(13)
   @JsonKey(name: "exam")
@@ -64,7 +65,7 @@ class QuestionModel {
       id: id,
       question: question,
       correct: correct,
-      subject: subject,
+      subject: subject?.toEntity(),
       exam: exam.toEntity(),
       createdAt: createdAt,
     );

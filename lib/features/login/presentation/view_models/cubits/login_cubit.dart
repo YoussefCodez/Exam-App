@@ -42,8 +42,9 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<bool> _toggleRememberMe(bool value) async {
-    return rememberMe = value;
+  Future<void> _toggleRememberMe(bool value) async {
+    rememberMe = value;
+    emit(LoginInitial());
   }
 
   Future<void> _login({required String email, required String password}) async {

@@ -1,3 +1,5 @@
+import 'package:exam/features/exam/domain/entities/subject_entity.dart';
+
 import 'answer_entity.dart';
 import 'exam_entity.dart';
 
@@ -7,7 +9,7 @@ class QuestionEntity {
   final String id;
   final String question;
   final String correct;
-  final String? subject;
+  final SubjectEntity? subject;
   final ExamEntity exam;
   final DateTime createdAt;
 

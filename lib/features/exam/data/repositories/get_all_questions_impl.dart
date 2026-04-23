@@ -6,6 +6,7 @@ import 'package:exam/features/exam/api/local_data_source/exam_local_data_source.
 import 'package:exam/features/exam/api/remote_data_source/exam_api_client.dart';
 import 'package:exam/features/exam/domain/entities/question_entity.dart';
 import 'package:exam/features/exam/domain/repositories/get_all_questions_contract.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: GetAllQuestionsContract)
@@ -22,45 +23,11 @@ class GetAllQuestionsImpl implements GetAllQuestionsContract {
 
   @override
   Future<BaseResponse<List<QuestionEntity>>> getAllQuestions(String id) async {
-    // final responseMock = QuestionsExamModel(
-    //   message: 'message',
-    //   questions: List<QuestionModel>.generate(
-    //     10,
-    //     (index) => QuestionModel(
-    //       id: index.toString(),
-    //       question: "Question $index",
-    //       answers: List<AnswerModel>.generate(
-    //         4,
-    //         (index) => AnswerModel(
-    //           key: "A${index + 1}",
-    //           answer: "Answer ${index + 1}",
-    //         ),
-    //       ),
-    //       correct: "A${index + 1}",
-    //       type: "single_choice",
-    //       exam: ExamModel(
-    //         title: 'mock',
-    //         active: true,
-    //         numberOfQuestions: 10,
-    //         subject: 'mock',
-    //         id: index.toString(),
-    //         duration: 150,
-    //         createdAt: DateTime.now(),
-    //       ),
-    //       createdAt: DateTime.now(),
-    //     ),
-    //   ),
-    // );
-    // return SuccessBaseResponse(
-    //   data: responseMock.toEntity().questions.toList(),
-    //   message: responseMock.message,
-    // );
     if (await networkInfo.isConnected) {
       try {
         if (await localDataSource.getCachedQuestions() != null) {
           final responseModel = await examApiClient.getQuestions(id);
           await localDataSource.cacheQuestions(responseModel);
-
           final resultEntity = responseModel.toEntity();
           return SuccessBaseResponse(
             data: resultEntity.questions.toList(),
@@ -81,6 +48,7 @@ class GetAllQuestionsImpl implements GetAllQuestionsContract {
           code: DioErrorHandler.getStatusCode(e) ?? 0,
         );
       } catch (e) {
+        debugPrint(e.toString());
         return ErrorBaseResponse(message: 'Unexpected error', code: 5);
       }
     } else {

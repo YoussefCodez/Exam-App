@@ -22,7 +22,7 @@ class QuestionModelAdapter extends TypeAdapter<QuestionModel> {
       id: fields[5] as String,
       question: fields[7] as String,
       correct: fields[9] as String,
-      subject: fields[11] as String?,
+      subject: fields[11] as SubjectModel?,
       exam: fields[13] as ExamModel,
       createdAt: fields[15] as DateTime,
     );
@@ -74,7 +74,9 @@ QuestionModel _$QuestionModelFromJson(Map<String, dynamic> json) =>
       id: json['_id'] as String,
       question: json['question'] as String,
       correct: json['correct'] as String,
-      subject: json['subject'] as String?,
+      subject: json['subject'] == null
+          ? null
+          : SubjectModel.fromJson(json['subject'] as Map<String, dynamic>),
       exam: ExamModel.fromJson(json['exam'] as Map<String, dynamic>),
       createdAt: DateTime.parse(json['createdAt'] as String),
     );

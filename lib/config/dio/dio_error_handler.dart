@@ -4,14 +4,16 @@ import 'package:exam/core/values/dio_exception_errors.dart';
 class DioErrorHandler {
   static String handle(DioException e) {
     if (e.response != null) {
+      final serverMessage = e.response?.data?[DioExceptionErrors.message];
+      if (serverMessage != null && serverMessage.toString().isNotEmpty) {
+        return serverMessage.toString();
+      }
       final statusCode = getStatusCode(e);
       switch(statusCode) {
         case 401:
           return DioExceptionErrors.tokenExpired;
         default:
-          return e.response?.data?[DioExceptionErrors.message] ??
-              e.response?.statusMessage ??
-              DioExceptionErrors.serverError;
+          return e.response?.statusMessage ?? DioExceptionErrors.serverError;
       }
     } else {
       switch (e.type) {

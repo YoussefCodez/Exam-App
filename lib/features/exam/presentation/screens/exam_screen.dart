@@ -27,7 +27,7 @@ class ExamScreen extends StatelessWidget {
         BlocProvider(create: (_) => SetMultiUserAnswerPerQCubit()),
         BlocProvider(
           create: (_) => getIt<GetAllQuestionsCubit>()
-            ..doEvent(GetAllQuestions(id: "6700708d30a3c3c1944a9c60")),
+            ..doEvent(GetAllQuestions(id: "69d980147c82914570305df7")),
         ),
       ],
       child: const ExamView(),

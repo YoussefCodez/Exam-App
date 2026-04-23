@@ -3,6 +3,7 @@ import 'package:exam/features/exam/data/models/answer_model.dart';
 import 'package:exam/features/exam/data/models/exam_model.dart';
 import 'package:exam/features/exam/data/models/question_model.dart';
 import 'package:exam/features/exam/data/models/questions_exam_model.dart';
+import 'package:exam/features/exam/data/models/subject_model.dart';
 
 class HiveSetup {
   static Future<void> init() async {
@@ -13,6 +14,7 @@ class HiveSetup {
     Hive.registerAdapter(QuestionModelAdapter());
     Hive.registerAdapter(ExamModelAdapter());
     Hive.registerAdapter(AnswerModelAdapter());
+    Hive.registerAdapter(SubjectModelAdapter());
     
     // Open Boxes
     await Hive.openBox<QuestionsExamModel>('exam_box');

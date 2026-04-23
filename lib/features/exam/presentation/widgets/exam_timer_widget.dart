@@ -12,7 +12,7 @@ class ExamTimerWidget extends StatelessWidget {
       builder: (context, state) {
         if (state is GetAllQuestionsSuccess) {
           return CountdownScreen(
-            minutes: state.questions[0].exam.duration,
+            minutes: state.questions.first.exam.duration,
             questions: state.questions,
           );
         }

@@ -29,7 +29,7 @@ import '../../features/exam/domain/use_cases/get_all_questions_use_case.dart'
 import '../../features/exam/presentation/view_models/cubits/get_all_questions_cubit.dart'
     as _i455;
 import '../../features/login/api/local_data_source/login_local_data_source.dart'
-    as _i308;
+    as _i880;
 import '../../features/login/api/remote_data_sources/login_api_client.dart'
     as _i1036;
 import '../../features/login/api/remote_data_sources/login_data_source_remote_impl.dart'
@@ -114,8 +114,8 @@ extension GetItInjectableX on _i174.GetIt {
         loginDataSourceRemote: gh<_i804.LoginDataSourceRemoteContract>(),
       ),
     );
-    gh.factory<_i308.LoginLocalDataSource>(
-      () => _i308.LoginLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    gh.factory<_i880.LoginLocalDataSource>(
+      () => _i880.LoginLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
     gh.factory<_i968.GetAllQuestionsContract>(
       () => _i303.GetAllQuestionsImpl(
@@ -145,19 +145,19 @@ extension GetItInjectableX on _i174.GetIt {
         getAllQuestionsUseCase: gh<_i728.GetAllQuestionsUseCase>(),
       ),
     );
-    gh.factory<_i753.LoginCubit>(
-      () => _i753.LoginCubit(
-        gh<_i191.LoginUseCase>(),
-        gh<_i558.FlutterSecureStorage>(),
-        gh<_i308.LoginLocalDataSource>(),
-      ),
-    );
     gh.factory<_i339.SignupRepoContract>(
       () => _i821.SignupRepoImpl(gh<_i485.SignupDataSourcesRemoteContract>()),
     );
     gh.factory<_i546.ForgotPasswordRepoContract>(
       () => _i551.ForgotPasswordRepoImpl(
         gh<_i458.ForgotPasswordDataSourcesContract>(),
+      ),
+    );
+    gh.factory<_i753.LoginCubit>(
+      () => _i753.LoginCubit(
+        gh<_i191.LoginUseCase>(),
+        gh<_i558.FlutterSecureStorage>(),
+        gh<_i880.LoginLocalDataSource>(),
       ),
     );
     gh.factory<_i194.ForgotPasswordUseCase>(
