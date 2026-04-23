@@ -30,9 +30,9 @@ import '../../features/explore/presentation/view_model/cubit/explore_view_model.
 import '../../features/login/api/data_sources/login_api_client.dart' as _i519;
 import '../../features/login/api/data_sources/login_data_source_remote_impl.dart'
     as _i593;
-import '../../features/login/data/repositories/login_data_source_remote_contract.dart'
-    as _i804;
-import '../../features/login/data/repositories/login_repo_impl.dart' as _i546;
+import '../../features/login/data/repo/login_data_source_remote_contract.dart'
+    as _i358;
+import '../../features/login/data/repo/login_repo_impl.dart' as _i176;
 import '../../features/login/domain/repositories/login_repo_contract.dart'
     as _i961;
 import '../../features/login/domain/use_cases/login_use_case.dart' as _i191;
@@ -90,7 +90,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i519.LoginApiClient>(
       () => _i519.LoginApiClient(gh<_i361.Dio>()),
     );
-    gh.factory<_i711.ForgotPasswordApiClient>(
+    gh.lazySingleton<_i711.ForgotPasswordApiClient>(
       () => _i711.ForgotPasswordApiClient(gh<_i361.Dio>()),
     );
     gh.factory<_i6.SignupApiClient>(() => _i6.SignupApiClient(gh<_i361.Dio>()));
@@ -105,9 +105,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i711.ForgotPasswordApiClient>(),
       ),
     );
-    gh.factory<_i804.LoginDataSourceRemoteContract>(
-      () => _i593.LoginDataSourceRemoteImpl(gh<_i519.LoginApiClient>()),
-    );
     gh.factory<_i485.SignupDataSourcesRemoteContract>(
       () => _i678.SignupDataSourcesRemoteImpl(gh<_i6.SignupApiClient>()),
     );
@@ -121,6 +118,11 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i339.SignupRepoContract>(
       () => _i821.SignupRepoImpl(gh<_i485.SignupDataSourcesRemoteContract>()),
+    );
+    gh.factory<_i961.LoginRepoContract>(
+      () => _i176.LoginRepoImpl(
+        loginDataSourceRemote: gh<_i358.LoginDataSourceRemoteContract>(),
+      ),
     );
     gh.factory<_i546.ForgotPasswordRepoContract>(
       () => _i551.ForgotPasswordRepoImpl(

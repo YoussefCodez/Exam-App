@@ -1,4 +1,4 @@
-sealed class SignupScreenTitles {
+abstract class SignupScreenTitles {
   static const String routeName = "SignUpScreen";
 
   // General

@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:exam/features/reset_password/data/models/request_model.dart';
 import 'package:exam/features/reset_password/data/models/forgot_password_response.dart';
 import 'package:exam/features/reset_password/data/models/new_password_response.dart';
 import 'package:exam/features/reset_password/data/models/verify_reset_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../../../core/values/endpoints.dart';
+import '../../../../core/values/endpoints/endpoints.dart';
 part 'forgot_password_api_client.g.dart';
 
-@injectable
+@LazySingleton()
 @RestApi()
 abstract class ForgotPasswordApiClient {
   @factoryMethod
@@ -15,14 +16,14 @@ abstract class ForgotPasswordApiClient {
 
   @POST(Endpoints.forgotPasswordUrl)
   Future<ForgotPasswordResponse> forgotPassword(
-    @Body() Map<String, dynamic> body,
+    @Body() RequestModel requestModel,
   );
 
   @PUT(Endpoints.resetPasswordUrl)
-  Future<NewPasswordResponse> newPassword(@Body() Map<String, dynamic> body);
+  Future<NewPasswordResponse> newPassword(@Body() RequestModel requestModel);
 
   @POST(Endpoints.verifyResetCodeUrl)
   Future<VerifyResetResponse> verifyResetCode(
-    @Body() Map<String, dynamic> body,
+    @Body() RequestModel requestModel,
   );
 }

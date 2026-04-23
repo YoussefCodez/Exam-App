@@ -21,13 +21,12 @@ class _ForgotPasswordApiClient implements ForgotPasswordApiClient {
 
   @override
   Future<ForgotPasswordResponse> forgotPassword(
-    Map<String, dynamic> body,
+    RequestModel requestModel,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
+    final _data = requestModel;
     final _options = _setStreamType<ForgotPasswordResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -50,12 +49,11 @@ class _ForgotPasswordApiClient implements ForgotPasswordApiClient {
   }
 
   @override
-  Future<NewPasswordResponse> newPassword(Map<String, dynamic> body) async {
+  Future<NewPasswordResponse> newPassword(RequestModel requestModel) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
+    final _data = requestModel;
     final _options = _setStreamType<NewPasswordResponse>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
@@ -78,12 +76,11 @@ class _ForgotPasswordApiClient implements ForgotPasswordApiClient {
   }
 
   @override
-  Future<VerifyResetResponse> verifyResetCode(Map<String, dynamic> body) async {
+  Future<VerifyResetResponse> verifyResetCode(RequestModel requestModel) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body);
+    final _data = requestModel;
     final _options = _setStreamType<VerifyResetResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(

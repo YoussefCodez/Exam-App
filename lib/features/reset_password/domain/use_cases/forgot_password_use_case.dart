@@ -13,18 +13,18 @@ class ForgotPasswordUseCase {
 
   Future<BaseResponse<ForgotPasswordResponse>> forgotPassword(
     String email,
-  ) async {
-    return await repoContract.forgotPassword(email);
+  ) {
+    return repoContract.forgotPassword(email);
   }
 
-  Future<BaseResponse<VerifyResetResponse>> verifyResetCode(String code) async {
-    return await repoContract.verifyResetCode(code);
+  Future<BaseResponse<VerifyResetResponse>> verifyResetCode(String code) {
+    return repoContract.verifyResetCode(code);
   }
 
   Future<BaseResponse<NewPasswordResponse>> newPassword(
     String email,
     String newPassword,
-  ) async {
-    return await repoContract.newPassword(email, newPassword);
+  ) {
+    return repoContract.newPassword(email, newPassword);
   }
 }

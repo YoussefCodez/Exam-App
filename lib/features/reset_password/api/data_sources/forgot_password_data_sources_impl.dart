@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/config/dio/dio_error_handler.dart';
-import 'package:exam/core/values/data_source_map_keys.dart';
+import 'package:exam/core/values/reset_password/data_source_map_keys.dart';
+import 'package:exam/features/reset_password/data/models/request_model.dart';
 import 'package:exam/features/reset_password/api/api_client/forgot_password_api_client.dart';
 import 'package:exam/features/reset_password/data/data_sources/forgot_password_data_sources_contract.dart';
 import 'package:exam/features/reset_password/data/models/forgot_password_response.dart';
@@ -20,9 +21,9 @@ class ForgotPasswordDataSourcesImpl
     String email,
   ) async {
     try {
-      final response = await apiClient.forgotPassword({
-        DataSourceMapKeys.email: email,
-      });
+      final response = await apiClient.forgotPassword(
+        RequestModel(body: {DataSourceMapKeys.email: email}),
+      );
       return SuccessBaseResponse<ForgotPasswordResponse>(data: response);
     } on DioException catch (e) {
       return ErrorBaseResponse(
@@ -35,9 +36,9 @@ class ForgotPasswordDataSourcesImpl
   @override
   Future<BaseResponse<VerifyResetResponse>> verifyResetCode(String code) async {
     try {
-      final response = await apiClient.verifyResetCode({
-        DataSourceMapKeys.resetCode: code,
-      });
+      final response = await apiClient.verifyResetCode(
+        RequestModel(body: {DataSourceMapKeys.resetCode: code}),
+      );
       return SuccessBaseResponse<VerifyResetResponse>(data: response);
     } on DioException catch (e) {
       return ErrorBaseResponse(
@@ -53,10 +54,14 @@ class ForgotPasswordDataSourcesImpl
     String newPassword,
   ) async {
     try {
-      final response = await apiClient.newPassword({
-        DataSourceMapKeys.email: email,
-        DataSourceMapKeys.newPassword: newPassword,
-      });
+      final response = await apiClient.newPassword(
+        RequestModel(
+          body: {
+            DataSourceMapKeys.email: email,
+            DataSourceMapKeys.newPassword: newPassword,
+          },
+        ),
+      );
       return SuccessBaseResponse<NewPasswordResponse>(
         data: NewPasswordResponse(
           message: response.message,
