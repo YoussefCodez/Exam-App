@@ -1,13 +1,15 @@
+import 'package:exam/features/login/api/local_data_source/login_local_data_source.dart';
+import 'package:exam/config/base_response/base_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
+import 'package:exam/features/login/domain/entities/login_result_entity.dart';
 import 'package:exam/features/login/domain/entities/user_entity.dart';
 import 'package:exam/features/login/domain/use_cases/login_use_case.dart';
 import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part '../states/login_state.dart';
 
@@ -15,11 +17,11 @@ part '../states/login_state.dart';
 class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase _loginUseCase;
   final FlutterSecureStorage _secureStorage;
-  final SharedPreferences _sharedPreferences;
+  final LoginLocalDataSource _localDataSource;
 
   bool rememberMe = false;
 
-  LoginCubit(this._loginUseCase, this._secureStorage, this._sharedPreferences)
+  LoginCubit(this._loginUseCase, this._secureStorage, this._localDataSource)
     : super(LoginInitial());
 
   void doEvent(
@@ -34,14 +36,15 @@ class LoginCubit extends Cubit<LoginState> {
       case Login():
         await _login(email: email!, password: password!);
       case LoadSavedAccount():
-        await _loadSavedAccount();
+        _loadSavedAccount();
       case GetSavedEmail():
         _getSavedEmail();
     }
   }
 
-  Future<bool> _toggleRememberMe(bool value) async {
-    return rememberMe = value;
+  Future<void> _toggleRememberMe(bool value) async {
+    rememberMe = value;
+    emit(LoginInitial());
   }
 
   Future<void> _login({required String email, required String password}) async {
@@ -49,38 +52,35 @@ class LoginCubit extends Cubit<LoginState> {
 
     try {
       final request = LoginRequest(email: email, password: password);
+      final response = await _loginUseCase.call(request);
 
-      final userEntity = await _loginUseCase.call(request);
+      switch (response) {
+        case SuccessBaseResponse<LoginResultEntity>(data: final userEntity):
+          await _secureStorage.write(
+            key: AppStrings.tokenKey,
+            value: userEntity.token,
+          );
 
-      await _secureStorage.write(
-        key: AppStrings.tokenKey,
-        value: userEntity.token,
-      );
+          if (rememberMe) {
+            await _localDataSource.saveUserCredentials(email, true);
+          } else {
+            await _localDataSource.clearUserCredentials();
+          }
 
-      if (rememberMe) {
-        await _sharedPreferences.setString(AppStrings.savedEmailKey, email);
-        await _sharedPreferences.setBool(AppStrings.rememberMeKey, true);
-      } else {
-        await _sharedPreferences.remove(AppStrings.savedEmailKey);
-        await _sharedPreferences.setBool(AppStrings.rememberMeKey, false);
+          emit(LoginSuccess(user: userEntity.user));
+        case ErrorBaseResponse<LoginResultEntity>(message: final message):
+          emit(LoginFailure(message: message));
       }
-
-      emit(LoginSuccess(user: userEntity));
     } catch (e) {
       emit(LoginFailure(message: e.toString()));
     }
   }
 
-  Future<void> _loadSavedAccount() async {
-    final email = _sharedPreferences.getString(AppStrings.savedEmailKey);
-    final isRemembered =
-        _sharedPreferences.getBool(AppStrings.rememberMeKey) ?? false;
-    if (isRemembered && email != null) {
-      rememberMe = true;
-    }
+  void _loadSavedAccount() {
+    rememberMe = _localDataSource.getRememberMeStatus();
   }
 
   String? _getSavedEmail() {
-    return _sharedPreferences.getString(AppStrings.savedEmailKey);
+    return _localDataSource.getSavedEmail();
   }
 }

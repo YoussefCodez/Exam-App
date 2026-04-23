@@ -19,4 +19,6 @@ abstract class Endpoints {
   static const String editProfileUrl = '/api/v1/auth/editProfile';
   static const String deleteMyAccountUrl = '/api/v1/auth/deleteMe';
 
+  // questions  
+  static const String getQuestionsUrl = '/api/v1/questions';
 }
