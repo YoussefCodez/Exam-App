@@ -1,6 +1,5 @@
+import 'package:exam/core/colors/app_colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/themes/app_colors.dart';
 
 class UnderlinedText extends StatelessWidget {
   final String underlinedText;

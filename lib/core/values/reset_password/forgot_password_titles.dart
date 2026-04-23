@@ -1,4 +1,9 @@
-sealed class ForgotPasswordTitles {
+abstract class ForgotPasswordTitles {
+  // Routes
+  static const String forgotPasswordScreen = '/reset-password-screen';
+  static const String newPasswordScreen = '/new-password-screen';
+  static const String verificationScreen = '/verification-screen';
+
   static const String empty = '';
   // Password
   static const String password = 'Password';

@@ -1,4 +1,4 @@
-sealed class SignupUserTitles {
+abstract class SignupUserTitles {
   static const String username = "username";
   static const String firstName = "firstName";
   static const String lastName = "lastName";

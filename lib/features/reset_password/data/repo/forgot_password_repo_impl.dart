@@ -12,46 +12,25 @@ class ForgotPasswordRepoImpl implements ForgotPasswordRepoContract {
   ForgotPasswordRepoImpl(this.dataContract);
 
   @override
-  Future<BaseResponse<ForgotPasswordResponse>> forgotPassword(String email) async {
+  Future<BaseResponse<ForgotPasswordResponse>> forgotPassword(
+    String email,
+  ) async {
     final response = await dataContract.forgotPassword(email);
-    switch (response) {
-      case SuccessBaseResponse<ForgotPasswordResponse>():
-        return SuccessBaseResponse(data: response.data);
-      case ErrorBaseResponse<ForgotPasswordResponse>():
-        return ErrorBaseResponse(
-          message: response.message,
-          code: response.code,
-        );
-    }
+    return response;
   }
-  
+
   @override
-  Future<BaseResponse<NewPasswordResponse>> newPassword(String email, String newPassword) async{
-    final response = await dataContract.newPassword(email,newPassword);
-    switch (response) {
-      case SuccessBaseResponse<NewPasswordResponse>():
-        return SuccessBaseResponse(data: response.data);
-      case ErrorBaseResponse<NewPasswordResponse>():
-        return ErrorBaseResponse(
-          message: response.message,
-          code: response.code,
-        );
-    }
+  Future<BaseResponse<NewPasswordResponse>> newPassword(
+    String email,
+    String newPassword,
+  ) async {
+    final response = await dataContract.newPassword(email, newPassword);
+    return response;
   }
-  
+
   @override
   Future<BaseResponse<VerifyResetResponse>> verifyResetCode(String code) async {
-        final response = await dataContract.verifyResetCode(code);
-    switch (response) {
-      case SuccessBaseResponse<VerifyResetResponse>():
-        return SuccessBaseResponse(data: response.data);
-      case ErrorBaseResponse<VerifyResetResponse>():
-        return ErrorBaseResponse(
-          message: response.message,
-          code: response.code,
-        );
-    }
+    final response = await dataContract.verifyResetCode(code);
+    return response;
   }
-
-
 }

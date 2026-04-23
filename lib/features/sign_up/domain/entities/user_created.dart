@@ -30,7 +30,6 @@ class UserCreated {
     );
   }
 
-  /// Convert UserCreated object to JSON map
   Map<String, dynamic> toJson() {
     return {
       'username': username,

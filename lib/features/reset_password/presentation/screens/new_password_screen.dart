@@ -1,7 +1,7 @@
 import 'package:exam/config/di/di.dart';
-import 'package:exam/core/values/forgot_password_titles.dart';
-import 'package:exam/core/values/routes.dart';
-import 'package:exam/core/themes/app_colors.dart';
+import 'package:exam/core/colors/app_colors.dart';
+import 'package:exam/core/values/reset_password/forgot_password_titles.dart';
+
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_events.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_states.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:password_validator_mate/password_validator_mate.dart';
 
 class NewPasswordScreen extends StatefulWidget {
-  static const String routeName = Routes.newPasswordScreen;
+  static const String routeName = ForgotPasswordTitles.newPasswordScreen;
 
   const NewPasswordScreen({super.key});
 
@@ -48,105 +48,104 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
             icon: const Icon(Icons.arrow_back_ios_new_outlined),
           ),
         ),
-        body: BlocBuilder<ResetViewModel, ResetStates>(
-          builder: (context, state) {
-            if (state is ResetLoading) {
-              return Center(
-                child: CircularProgressIndicator(color: AppColors.blue),
-              );
-            } else if (state is ResetSuccess) {
-              return const Center(
-                child: Text(ForgotPasswordTitles.passwordUpdated),
-              ); //then Navigate to login
-            } else if (state is ResetError) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(state.message)));
-              });
-            }
+        body: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Text(
+                ForgotPasswordTitles.resetPassword,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
 
-            return Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Text(
-                    ForgotPasswordTitles.resetPassword,
-                    style: Theme.of(context).textTheme.titleMedium,
+              /// PASSWORD
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: TextFormField(
+                  controller: passwordTextController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: ForgotPasswordTitles.password,
+                    hintText: ForgotPasswordTitles.enterPassword,
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return ForgotPasswordTitles.passwordRequired;
+                    }
 
-                  /// PASSWORD
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: TextFormField(
-                      controller: passwordTextController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        labelText: ForgotPasswordTitles.password,
-                        hintText: ForgotPasswordTitles.enterPassword,
-                      ),
-                      onChanged: (_) => setState(() {}),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return ForgotPasswordTitles.passwordRequired;
-                        }
+                    final rules = PasswordValidators.defaultRules();
+                    for (var rule in rules) {
+                      if (!rule.validator(value)) {
+                        return rule.description;
+                      }
+                    }
+                    return null;
+                  },
+                ),
+              ),
 
-                        final rules = PasswordValidators.defaultRules();
-                        for (var rule in rules) {
-                          if (!rule.validator(value)) {
-                            return rule.description;
-                          }
-                        }
-                        return null;
-                      },
-                    ),
+              /// CONFIRM PASSWORD
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: TextFormField(
+                  controller: confirmPasswordTextController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: ForgotPasswordTitles.confirmPassword,
+                    hintText: ForgotPasswordTitles.confirmPassword,
                   ),
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return ForgotPasswordTitles.confirmPasswordIsRequired;
+                    }
+                    if (value != passwordTextController.text) {
+                      return ForgotPasswordTitles.notMatchPassword;
+                    }
+                    return null;
+                  },
+                ),
+              ),
 
-                  /// CONFIRM PASSWORD
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: TextFormField(
-                      controller: confirmPasswordTextController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        labelText: ForgotPasswordTitles.confirmPassword,
-                        hintText: ForgotPasswordTitles.confirmPassword,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return ForgotPasswordTitles.confirmPasswordIsRequired;
-                        }
-                        if (value != passwordTextController.text) {
-                          return ForgotPasswordTitles.notMatchPassword;
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
+              /// PASSWORD VALIDATION UI
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: PasswordValidation(
+                  password: passwordTextController.text,
+                  rules: PasswordValidators.defaultRules(),
+                  passColor: AppColors.blue,
+                  failedColor: Colors.grey,
+                  onValidationChanged: (allPassed, _) {},
+                ),
+              ),
 
-                  /// PASSWORD VALIDATION UI
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    child: PasswordValidation(
-                      password: passwordTextController.text,
-                      rules: PasswordValidators.defaultRules(),
-                      passColor: AppColors.blue,
-                      failedColor: Colors.grey,
-                      onValidationChanged: (allPassed, _) {},
-                    ),
-                  ),
+              /// BUTTON
+              BlocBuilder<ResetViewModel, ResetStates>(
+                builder: (context, state) {
+                  if (state is ResetLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(color: AppColors.blue),
+                    );
+                  } else if (state is ResetSuccess) {
+                    return const Center(
+                      child: Text(ForgotPasswordTitles.passwordUpdated),
+                    ); //then Navigate to login
+                  } else if (state is ResetError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                    });
+                  }
 
-                  /// BUTTON
-                  Row(
+                  return Row(
                     children: [
                       Expanded(
                         child: Padding(
@@ -161,20 +160,24 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                       .trim(),
                                 );
 
-                                debugPrint(ForgotPasswordTitles.passwordUpdatedMessage);
+                                debugPrint(
+                                  ForgotPasswordTitles.passwordUpdatedMessage,
+                                );
                                 // show that password updated successfully then delay and go back to login
                               }
                             },
-                            child: const Text(ForgotPasswordTitles.continueButton),
+                            child: const Text(
+                              ForgotPasswordTitles.continueButton,
+                            ),
                           ),
                         ),
                       ),
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
     );

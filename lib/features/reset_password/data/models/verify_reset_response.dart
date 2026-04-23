@@ -1,4 +1,4 @@
-import 'package:exam/core/values/reset_responses.dart';
+import 'package:exam/core/values/reset_password/reset_responses.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'verify_reset_response.g.dart';
 

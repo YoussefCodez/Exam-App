@@ -1,6 +1,5 @@
 import 'package:exam/config/di/di.dart';
-import 'package:exam/core/app_strings/app_strings.dart';
-import 'package:exam/features/home/home_screen.dart';
+import 'package:exam/core/values/log_in/login_user_titles.dart';
 import 'package:exam/features/login/presentation/screens/login_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
 import 'package:exam/features/reset_password/presentation/screens/new_password_screen.dart';
@@ -19,25 +18,23 @@ Future<void> main() async {
   await configureDependencies();
   final storage = getIt<FlutterSecureStorage>();
   final prefs = getIt<SharedPreferences>();
-  final String? token = await storage.read(key: AppStrings.tokenKey);
-  final bool rememberMe = prefs.getBool(AppStrings.rememberMeKey) ?? false;
+  final String? token = await storage.read(key: LoginUserTitles.tokenKey);
+  final bool rememberMe = prefs.getBool(LoginUserTitles.rememberMeKey) ?? false;
   final String initialRoute = (token != null && rememberMe)
-      ? AppStrings.homeRoute
-      : AppStrings.loginRoute;
+      ? LoginUserTitles.homeRoute
+      : LoginUserTitles.loginRoute;
   runApp(MyApp(initialRoute: initialRoute));
 }
 
-// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   final String initialRoute;
   MyApp({super.key, required this.initialRoute});
   final Map<String, WidgetBuilder> routes = {
-    AppStrings.loginRoute: (context) => BlocProvider(
+    LoginUserTitles.loginRoute: (context) => BlocProvider(
       create: (context) => getIt<LoginCubit>(),
       child: const LoginScreen(),
     ),
-    AppStrings.homeRoute: (context) => const HomeScreen(),
-    ResetScreen.routeName: (context) => const ResetScreen(),
+    ForgotPasswordEmailPage.routeName: (context) => const ForgotPasswordEmailPage(),
     VerificationScreen.routeName: (context) => VerificationScreen(),
     NewPasswordScreen.routeName: (context) => NewPasswordScreen(),
     SignUpScreen.routeName: (context) => SignUpScreen(),

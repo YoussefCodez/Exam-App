@@ -1,4 +1,4 @@
-sealed class DioExceptionErrors {
+abstract class DioExceptionErrors {
   static const String message = 'message';
   static const String serverError = 'Server error';
 
