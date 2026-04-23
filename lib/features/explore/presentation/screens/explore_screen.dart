@@ -1,4 +1,4 @@
-import 'package:exam/core/app_colors/app_colors.dart';
+import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/explore/explore_screen_titles.dart';
 import 'package:exam/features/explore/api/data_sources/mock_data.dart';
 import 'package:exam/features/explore/presentation/screens/subject_screen.dart';

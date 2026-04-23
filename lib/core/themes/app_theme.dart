@@ -1,10 +1,6 @@
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:exam/core/colors/app_colors.dart';
-=======
 import 'package:flutter_screenutil/flutter_screenutil.dart';
->>>>>>> 1cd2b61240cec86a61c3c1e360e115333a02c5ed
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(

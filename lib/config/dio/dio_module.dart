@@ -1,12 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:exam/core/values/endpoints/endpoints.dart';
 import 'package:injectable/injectable.dart';
-<<<<<<< HEAD
-import '../../core/values/endpoints/endpoints.dart';
-=======
 import 'token_interceptor.dart';
-import '../../core/values/endpoints.dart';
->>>>>>> 1cd2b61240cec86a61c3c1e360e115333a02c5ed
-
 @module
 abstract class DioModule {
   @lazySingleton

@@ -1,4 +1,4 @@
-import 'package:exam/core/app_colors/app_colors.dart';
+import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/explore/subject_screen_titles.dart';
 import 'package:flutter/material.dart';
 
