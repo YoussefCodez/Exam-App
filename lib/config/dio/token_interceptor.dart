@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:exam/core/values/endpoints/endpoints.dart';
 import 'package:exam/main.dart';
 import 'package:exam/config/dio/dio_error_handler.dart';
-import 'package:exam/core/values/endpoints.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:injectable/injectable.dart';

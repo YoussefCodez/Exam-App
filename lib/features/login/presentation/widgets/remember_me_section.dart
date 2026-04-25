@@ -33,7 +33,7 @@ class RememberMeSection extends StatelessWidget {
         const Spacer(),
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, ResetScreen.routeName);
+            Navigator.pushNamed(context, ForgotPasswordEmailPage.routeName);
           },
           child: const Text(
             AppStrings.forgotPassword,

@@ -10,8 +10,7 @@ class SignupUseCase {
   final SignupRepoContract repo;
 
   Future<BaseResponse<User>> signUp(UserCreated userCreated) async{
-    final user = await repo.addUser(userCreated);
-    return user;
+    return repo.addUser(userCreated);
   }
 }
 

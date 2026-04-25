@@ -1,17 +1,16 @@
 import 'package:exam/config/di/di.dart';
-import 'package:exam/core/values/forgot_password_titles.dart';
-import 'package:exam/core/values/routes.dart';
-import 'package:exam/core/themes/app_colors.dart';
+import 'package:exam/core/colors/app_colors.dart';
+import 'package:exam/core/values/reset_password/forgot_password_titles.dart';
+import 'package:exam/core/widgets/underlined_text.dart';
 import 'package:exam/features/reset_password/presentation/screens/new_password_screen.dart';
 import 'package:exam/features/reset_password/presentation/view_model/cubit/reset_view_model.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_events.dart';
 import 'package:exam/features/reset_password/presentation/view_model/states/reset_states.dart';
-import 'package:exam/features/reset_password/presentation/widgets/underlined_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class VerificationScreen extends StatelessWidget {
-  static const String routeName = Routes.verificationScreen;
+  static const String routeName = ForgotPasswordTitles.verificationScreen;
 
   VerificationScreen({super.key});
 

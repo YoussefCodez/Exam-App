@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:exam/core/values/endpoints/endpoints.dart';
 import 'package:injectable/injectable.dart';
 import 'token_interceptor.dart';
-import '../../core/values/endpoints.dart';
-
 @module
 abstract class DioModule {
   @lazySingleton
@@ -10,8 +9,8 @@ abstract class DioModule {
     final dio = Dio();
 
     dio.options.baseUrl = Endpoints.baseUrl;
-    dio.options.connectTimeout = const Duration(seconds: 5);
-    dio.options.receiveTimeout = const Duration(seconds: 3);
+    dio.options.connectTimeout = const Duration(seconds: 20);
+    dio.options.receiveTimeout = const Duration(seconds: 20);
 
     dio.interceptors.add(tokenInterceptor);
 

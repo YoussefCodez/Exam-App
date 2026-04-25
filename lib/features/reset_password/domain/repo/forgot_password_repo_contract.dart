@@ -3,7 +3,7 @@ import 'package:exam/features/reset_password/data/models/forgot_password_respons
 import 'package:exam/features/reset_password/data/models/new_password_response.dart';
 import 'package:exam/features/reset_password/data/models/verify_reset_response.dart';
 
-abstract class ForgotPasswordRepoContract {
+abstract interface class ForgotPasswordRepoContract {
   Future<BaseResponse<ForgotPasswordResponse>> forgotPassword(String email);
   Future<BaseResponse<NewPasswordResponse>> newPassword(
     String email,

@@ -1,13 +1,13 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/sign_up/signup_screen_titles.dart';
 import 'package:exam/features/login/presentation/screens/login_screen.dart';
 import 'package:exam/features/sign_up/presentation/view_model/states/signup_events.dart';
 import 'package:password_validator_mate/password_validator_mate.dart';
-import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/sign_up/domain/entities/user_created.dart';
 import 'package:exam/features/sign_up/presentation/view_model/cubit/signup_view_model.dart';
 import 'package:exam/features/sign_up/presentation/view_model/states/signup_states.dart';
-import 'package:exam/features/sign_up/presentation/widgets/underlined_text.dart';
+import 'package:exam/core/widgets/underlined_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/di/di.dart';
@@ -235,9 +235,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             controller: passwordTextController,
                             obscureText: true,
-                            onChanged: (value) {
-                              setState(() {});
-                            },
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return SignupScreenTitles.passwordRequired;
