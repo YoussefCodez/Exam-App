@@ -3,7 +3,7 @@ import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/config/dio/dio_error_handler.dart';
 import 'package:exam/features/login/api/remote_data_sources/login_api_client.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
-import 'package:exam/features/login/data/models/user_model.dart';
+import 'package:exam/features/login/data/models/login_response.dart';
 import 'package:exam/features/login/data/repositories/login_data_source_remote_contract.dart';
 import 'package:injectable/injectable.dart';
 

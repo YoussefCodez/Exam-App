@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:exam/features/explore/data/models/subject.dart';
+import 'package:exam/core/values/endpoints/endpoints.dart';
+import 'package:exam/features/explore/data/models/subjects_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -11,7 +12,7 @@ abstract class ExploreApiClient {
   @factoryMethod
   factory ExploreApiClient(Dio dio) = _ExploreApiClient;
 
-  @GET('/subjects')
-  Future<List<Subject>> getSubjects(@Header('token') String token);
+  @GET(Endpoints.subjects)
+  Future<SubjectsResponse> getSubjects(@Header('token') String token);
 }
 

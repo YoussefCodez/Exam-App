@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:exam/core/values/endpoints/endpoints.dart';
+import 'package:exam/features/exam/data/models/exams_response_model.dart';
 import 'package:exam/features/exam/data/models/questions_exam_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -13,7 +14,8 @@ abstract class ExamApiClient {
   factory ExamApiClient(Dio dio) = _ExamApiClient;
 
   @GET(Endpoints.getQuestionsUrl)
-  Future<QuestionsExamModel> getQuestions(
-    @Query("exam") String id
-  );
+  Future<QuestionsExamModel> getQuestions(@Query("exam") String id);
+
+  @GET(Endpoints.examsUrl)
+  Future<ExamsResponseModel> getExams(@Query("subject") String subjectId);
 }

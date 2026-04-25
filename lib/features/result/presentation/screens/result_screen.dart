@@ -1,7 +1,6 @@
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/result/domain/entities/result_item_entity.dart';
-import 'package:exam/features/result/presentation/screens/main_result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,8 +25,9 @@ class ResultScreen extends StatelessWidget {
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              MainResultScreen.routeName,
+              AppStrings.homeRoute,
               (route) => false,
+              arguments: 1, 
             );
           },
         ),

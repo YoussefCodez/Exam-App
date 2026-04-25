@@ -1,6 +1,5 @@
 import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/explore/explore_screen_titles.dart';
-import 'package:exam/features/explore/api/data_sources/mock_data.dart';
 import 'package:exam/features/explore/presentation/screens/subject_screen.dart';
 import 'package:exam/features/explore/presentation/view_model/cubit/explore_view_model.dart';
 import 'package:exam/features/explore/presentation/view_model/states/explore_states.dart';
@@ -13,7 +12,7 @@ import '../view_model/states/explore_events.dart';
 
 class ExploreScreen extends StatefulWidget {
   static const String routeName = ExploreScreenTitles.routeName;
-  ExploreScreen({super.key});
+  const ExploreScreen({super.key});
 
   @override
   State<ExploreScreen> createState() => _ExploreScreenState();
@@ -93,10 +92,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           arguments: {
                             "name": state.data[index].name,
                             "icon": state.data[index].icon,
+                            "id": state.data[index].id
                           },
                         ),
                       ),
-                      itemCount: MockData().mockSubjects.length,
+                      itemCount: state.data.length,
                     ),
                   );
                 } else if (state is ExploreError) {

@@ -54,6 +54,19 @@ import '../../features/login/domain/repositories/login_repo_contract.dart'
 import '../../features/login/domain/use_cases/login_use_case.dart' as _i191;
 import '../../features/login/presentation/view_models/cubits/login_cubit.dart'
     as _i753;
+import '../../features/profile/api/api_client/profile_api_client.dart' as _i699;
+import '../../features/profile/api/data_sources/profile_data_sources_remote_impl.dart'
+    as _i247;
+import '../../features/profile/data/data_sources/profile_data_sources_remote_contract.dart'
+    as _i253;
+import '../../features/profile/data/repo/profile_repo_impl.dart' as _i256;
+import '../../features/profile/domain/repo/profile_repo_contract.dart' as _i541;
+import '../../features/profile/domain/use_cases/get_profile_info_usecase.dart'
+    as _i150;
+import '../../features/profile/domain/use_cases/update_profile_info_usecase.dart'
+    as _i599;
+import '../../features/profile/presentation/view_model/cubit/cubit.dart'
+    as _i257;
 import '../../features/reset_password/api/api_client/forgot_password_api_client.dart'
     as _i711;
 import '../../features/reset_password/api/data_sources/forgot_password_data_sources_impl.dart'
@@ -124,6 +137,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1036.LoginApiClient>(
       () => _i1036.LoginApiClient(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i699.ProfileApiClient>(
+      () => _i699.ProfileApiClient(gh<_i361.Dio>()),
+    );
     gh.lazySingleton<_i711.ForgotPasswordApiClient>(
       () => _i711.ForgotPasswordApiClient(gh<_i361.Dio>()),
     );
@@ -145,17 +161,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i880.LoginLocalDataSource>(
       () => _i880.LoginLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
-    gh.factory<_i634.ExploreDataSourcesContract>(
-      () => _i136.ExploreDataSourcesImpl(
-        apiClient: gh<_i1020.ExploreApiClient>(),
-        secureStorage: gh<_i558.FlutterSecureStorage>(),
-      ),
-    );
     gh.factory<_i1070.GetPastExamsUseCase>(
       () => _i1070.GetPastExamsUseCase(gh<_i1000.ResultRepository>()),
     );
     gh.factory<_i57.SavePastExamUseCase>(
       () => _i57.SavePastExamUseCase(gh<_i1000.ResultRepository>()),
+    );
+    gh.factory<_i253.ProfileDataSourcesRemoteContract>(
+      () => _i247.ProfileDataSourcesRemoteImpl(gh<_i699.ProfileApiClient>()),
+    );
+    gh.factory<_i634.ExploreDataSourcesContract>(
+      () => _i136.ExploreDataSourcesImpl(
+        apiClient: gh<_i1020.ExploreApiClient>(),
+        secureStorage: gh<_i558.FlutterSecureStorage>(),
+      ),
     );
     gh.factory<_i968.GetAllQuestionsContract>(
       () => _i303.GetAllQuestionsImpl(
@@ -167,6 +186,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i191.LoginUseCase>(
       () => _i191.LoginUseCase(gh<_i961.LoginRepoContract>()),
     );
+    gh.factory<_i541.ProfileRepoContract>(
+      () => _i256.ProfileRepoImpl(gh<_i253.ProfileDataSourcesRemoteContract>()),
+    );
     gh.factory<_i458.ForgotPasswordDataSourcesContract>(
       () => _i406.ForgotPasswordDataSourcesImpl(
         gh<_i711.ForgotPasswordApiClient>(),
@@ -176,6 +198,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i728.GetAllQuestionsUseCase(
         getAllQuestionsContract: gh<_i968.GetAllQuestionsContract>(),
       ),
+    );
+    gh.factory<_i150.GetProfileInfoUseCase>(
+      () => _i150.GetProfileInfoUseCase(gh<_i541.ProfileRepoContract>()),
+    );
+    gh.factory<_i599.UpdateProfileInfoUsecase>(
+      () => _i599.UpdateProfileInfoUsecase(gh<_i541.ProfileRepoContract>()),
     );
     gh.factory<_i582.ResultCubit>(
       () => _i582.ResultCubit(
@@ -188,6 +216,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i135.ExploreRepoContract>(
       () => _i932.ExploreRepoImpl(gh<_i634.ExploreDataSourcesContract>()),
+    );
+    gh.factory<_i257.ProfileViewModel>(
+      () => _i257.ProfileViewModel(gh<_i150.GetProfileInfoUseCase>()),
     );
     gh.factory<_i455.GetAllQuestionsCubit>(
       () => _i455.GetAllQuestionsCubit(

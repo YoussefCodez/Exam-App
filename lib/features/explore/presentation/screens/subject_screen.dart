@@ -1,5 +1,6 @@
 import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/explore/subject_screen_titles.dart';
+import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:flutter/material.dart';
 
 class SubjectScreen extends StatelessWidget {
@@ -29,10 +30,12 @@ class SubjectScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
+                        Image.network(
                           args[SubjectScreenTitles.icon]!,
                           height: 50,
                           width: 50,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.error_outline, size: 50),
                         ),
                         SizedBox(width: 10),
                         Text(
@@ -89,7 +92,13 @@ class SubjectScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          ExamScreen.routeName,
+                          arguments: {"id": args["id"]},
+                        );
+                      },
                       child: Text("Start"),
                     ),
                   ),

@@ -14,6 +14,7 @@ class ExamTimerWidget extends StatelessWidget {
           return CountdownScreen(
             minutes: state.questions.first.exam.duration,
             questions: state.questions,
+            id: state.questions.first.exam.id,
           );
         }
         return const SizedBox.shrink();

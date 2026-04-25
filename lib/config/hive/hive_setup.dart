@@ -20,5 +20,6 @@ class HiveSetup {
     await Hive.openBox<QuestionsExamModel>('exam_box');
     await Hive.openBox('userAnswers');
     await Hive.openBox('timer');
+    await Hive.openBox('past_exams_box');
   }
 }

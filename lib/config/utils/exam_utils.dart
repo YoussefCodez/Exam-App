@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_ce_flutter/hive_ce_flutter.dart';
-import '../../config/di/di.dart';
+import '../di/di.dart';
 import '../../features/exam/domain/entities/question_entity.dart';
 import '../../features/exam/domain/entities/subject_entity.dart';
 import '../../features/exam/presentation/screens/score_screen.dart';
@@ -14,6 +14,7 @@ class ExamUtils {
   static void finishExam({
     required BuildContext context,
     required List<QuestionEntity> questions,
+    required String id,
   }) {
     int correctAnswers = 0;
     final userAnswersList = context.read<UserAnswerCubit>().state;
@@ -64,6 +65,7 @@ class ExamUtils {
           totalQuestions: questions.length,
           correctAnswers: correctAnswers,
           results: results,
+          id: id,
         ),
       ),
     );

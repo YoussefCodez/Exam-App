@@ -18,13 +18,12 @@ class ExploreDataSourcesImpl implements ExploreDataSourcesContract{
   @override
   Future<BaseResponse<List<Subject>>> getSubjects() async{
     try {
-      // final tokenValue = await secureStorage.read(
-      //   key: AppStrings.tokenKey,
-      // );
-      // print("token: $tokenValue");
-      // final response = await apiClient.getSubjects(tokenValue ?? "");
-      await Future.delayed(const Duration(seconds: 2)); // ⏳ delay
-      return SuccessBaseResponse(data: MockData().mockSubjects);
+      final tokenValue = await secureStorage.read(
+        key: AppStrings.tokenKey,
+      );
+      print("token: $tokenValue");
+      final response = await apiClient.getSubjects(tokenValue ?? "");
+      return SuccessBaseResponse(data: response.subjects ?? []);
     } on DioException catch (e) {
       return ErrorBaseResponse(
         message: DioErrorHandler.handle(e),

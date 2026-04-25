@@ -22,26 +22,25 @@ class GetAllQuestionsImpl implements GetAllQuestionsContract {
   });
 
   @override
-  Future<BaseResponse<List<QuestionEntity>>> getAllQuestions(String id) async {
+  Future<BaseResponse<List<QuestionEntity>>> getAllQuestions(String subjectId) async {
     if (await networkInfo.isConnected) {
       try {
-        if (await localDataSource.getCachedQuestions() != null) {
-          final responseModel = await examApiClient.getQuestions(id);
-          await localDataSource.cacheQuestions(responseModel);
-          final resultEntity = responseModel.toEntity();
-          return SuccessBaseResponse(
-            data: resultEntity.questions.toList(),
-            message: resultEntity.message,
-          );
-        } else {
-          final responseModel = await examApiClient.getQuestions(id);
-          await localDataSource.cacheQuestions(responseModel);
-          final resultEntity = responseModel.toEntity();
-          return SuccessBaseResponse(
-            data: resultEntity.questions.toList(),
-            message: resultEntity.message,
-          );
+        final examsResponse = await examApiClient.getExams(subjectId);
+        
+        if (examsResponse.exams == null || examsResponse.exams!.isEmpty) {
+          return ErrorBaseResponse(message: 'No exams found for this subject', code: 404);
         }
+        
+        final examId = examsResponse.exams!.first.id;
+
+        final responseModel = await examApiClient.getQuestions(examId);
+        await localDataSource.cacheQuestions(responseModel);
+        
+        final resultEntity = responseModel.toEntity();
+        return SuccessBaseResponse(
+          data: resultEntity.questions.toList(),
+          message: resultEntity.message,
+        );
       } on DioException catch (e) {
         return ErrorBaseResponse(
           message: DioErrorHandler.handle(e),
@@ -49,7 +48,7 @@ class GetAllQuestionsImpl implements GetAllQuestionsContract {
         );
       } catch (e) {
         debugPrint(e.toString());
-        return ErrorBaseResponse(message: 'Unexpected error', code: 5);
+        return ErrorBaseResponse(message: 'Unexpected error: ${e.toString()}', code: 5);
       }
     } else {
       final cachedModel = await localDataSource.getCachedQuestions();

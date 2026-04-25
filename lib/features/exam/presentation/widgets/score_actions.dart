@@ -1,16 +1,17 @@
+import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:exam/features/exam/presentation/widgets/action_button.dart';
+import 'package:exam/features/result/domain/entities/result_item_entity.dart';
 import 'package:exam/features/result/presentation/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/app_strings/app_strings.dart';
 import '../../../../core/themes/app_colors.dart';
 
-import 'package:exam/features/result/domain/entities/result_item_entity.dart';
-
 class ScoreActions extends StatelessWidget {
   final List<ResultItemEntity> results;
+  final String id;
 
-  const ScoreActions({super.key, required this.results});
+  const ScoreActions({super.key, required this.results, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,15 @@ class ScoreActions extends StatelessWidget {
           ),
           SizedBox(height: 24.h),
           ActionButton(
-            onTap: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppStrings.examRoute,
-              (route) => false,
-            ),
+            onTap: () {
+              print(id);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                ExamScreen.routeName,
+                arguments: {"id": id},
+                (route) => false,
+              );
+            },
             text: AppStrings.startAgain,
             isOutline: true,
           ),

@@ -8,6 +8,7 @@ import 'package:exam/features/exam/presentation/view_models/states/get_all_quest
 import 'package:exam/features/exam/presentation/widgets/exam_body_widget.dart';
 import 'package:exam/features/exam/presentation/widgets/exam_timer_widget.dart';
 import 'package:exam/features/exam/presentation/widgets/exit_exam_dialog.dart';
+import 'package:exam/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:exam/features/exam/presentation/view_models/cubits/set_multi_user_answer_per_q.dart';
@@ -19,6 +20,8 @@ class ExamScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String?>;
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AnswerNumberCubit()),
@@ -26,8 +29,9 @@ class ExamScreen extends StatelessWidget {
         BlocProvider(create: (_) => SetUserAnswerPerQCubit()),
         BlocProvider(create: (_) => SetMultiUserAnswerPerQCubit()),
         BlocProvider(
-          create: (_) => getIt<GetAllQuestionsCubit>()
-            ..doEvent(GetAllQuestions(id: "69d980147c82914570305df7")),
+          create: (_) =>
+              getIt<GetAllQuestionsCubit>()
+                ..doEvent(GetAllQuestions(id: args['id'] ?? "")),
         ),
       ],
       child: const ExamView(),
@@ -67,7 +71,10 @@ class ExamView extends StatelessWidget {
         onConfirm: () {
           context.read<UserAnswerCubit>().clearAnswers();
           Hive.box('timer').clear();
-          Navigator.pop(context);
+          Navigator.pushNamed(
+            context,
+            HomeScreen.routeName,
+          );
         },
       ),
     );

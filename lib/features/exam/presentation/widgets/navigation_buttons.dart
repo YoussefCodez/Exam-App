@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/app_strings/app_strings.dart';
-import '../../../../core/utils/exam_utils.dart';
+import '../../../../config/utils/exam_utils.dart';
 import '../../domain/entities/question_entity.dart';
 import '../view_models/cubits/answer_number.dart';
 import '../view_models/cubits/set_multi_user_answer_per_q.dart';
@@ -65,7 +65,7 @@ class NavigationButtons extends StatelessWidget {
       context.read<AnswerNumberCubit>().nextQuestion();
       onSync(questionNumber + 1);
     } else {
-      ExamUtils.finishExam(context: context, questions: questions);
+      ExamUtils.finishExam(context: context, questions: questions, id: questions.first.subject?.id ?? "");
     }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:exam/core/values/endpoints/endpoints.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
-import 'package:exam/features/login/data/models/user_model.dart';
+import 'package:exam/features/login/data/models/login_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 

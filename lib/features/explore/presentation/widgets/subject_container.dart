@@ -23,7 +23,7 @@ class SubjectContainer extends StatelessWidget {
           child: Center(
             child: Row(
               children: [
-                Image.asset(icon, height: 50, width: 50),
+                Image.network(icon, height: 50, width: 50),
                 SizedBox(width: 10),
                 Text(name, style: Theme.of(context).textTheme.bodyMedium),
               ],

@@ -21,4 +21,6 @@ abstract class Endpoints {
 
   // questions  
   static const String getQuestionsUrl = '/api/v1/questions';
+  static const String examsUrl = '/api/v1/exams';
+  static const String subjects = '/api/v1/subjects';
 }

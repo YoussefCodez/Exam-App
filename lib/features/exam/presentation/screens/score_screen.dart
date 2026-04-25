@@ -11,12 +11,14 @@ class ScoreScreen extends StatelessWidget {
   final int totalQuestions;
   final int correctAnswers;
   final List<ResultItemEntity> results;
+  final String id;
 
   const ScoreScreen({
     super.key,
     required this.totalQuestions,
     required this.correctAnswers,
     required this.results,
+    required this.id,
   });
 
   @override
@@ -40,7 +42,7 @@ class ScoreScreen extends StatelessWidget {
       body: Padding(
         padding: REdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24.h),
             Text(
@@ -58,7 +60,7 @@ class ScoreScreen extends StatelessWidget {
               wrongCount: wrongAnswers,
             ),
             SizedBox(height: 80.h),
-            ScoreActions(results: results),
+            ScoreActions(results: results, id: id),
             SizedBox(height: 24.h),
           ],
         ),

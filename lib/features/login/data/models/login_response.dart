@@ -1,6 +1,6 @@
 import 'package:exam/features/login/data/models/user.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'user_model.g.dart';
+part 'login_response.g.dart';
 
 @JsonSerializable()
 class LoginResponse {

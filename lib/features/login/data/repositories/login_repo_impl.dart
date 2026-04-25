@@ -1,6 +1,6 @@
 import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/features/login/data/models/login_request.dart';
-import 'package:exam/features/login/data/models/user_model.dart';
+import 'package:exam/features/login/data/models/login_response.dart';
 import 'package:exam/features/login/data/repositories/login_data_source_remote_contract.dart';
 import 'package:exam/features/login/domain/entities/login_result_entity.dart';
 import 'package:exam/features/login/domain/entities/user_entity.dart';

@@ -1,6 +1,6 @@
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/themes/app_colors.dart';
-import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
+import 'package:exam/features/home/presentation/screens/home_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
 import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
 import 'package:exam/features/login/presentation/widgets/dont_have_account_section.dart';
@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../explore/presentation/screens/explore_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = AppStrings.loginRoute;
@@ -61,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
             _emailErrorNotifier.value = null;
             _passwordErrorNotifier.value = null;
           } else if (state is LoginSuccess) {
-            Navigator.pushReplacementNamed(context, ExamScreen.routeName);
+            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
           } else if (state is LoginFailure) {
             final msg = state.message.toLowerCase();
             if (msg.contains(AppStrings.emailLabel.toLowerCase())) {

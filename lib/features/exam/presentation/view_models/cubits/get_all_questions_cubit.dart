@@ -19,10 +19,10 @@ class GetAllQuestionsCubit extends Cubit<GetAllQuestionsState> {
     }
   }
 
-  Future<void> getAllQuestions(String id) async {
+  Future<void> getAllQuestions(String subjectId) async {
     emit(GetAllQuestionsLoading());
     try {
-      final result = await getAllQuestionsUseCase.call(id);
+      final result = await getAllQuestionsUseCase.call(subjectId);
       if (result is SuccessBaseResponse<List<QuestionEntity>>) {
         emit(GetAllQuestionsSuccess(result.data));
       } else  if (result is ErrorBaseResponse){

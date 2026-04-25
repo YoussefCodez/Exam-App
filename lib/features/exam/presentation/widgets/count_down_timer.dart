@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/core/values/app_images/app_images.dart';
-import 'package:exam/core/utils/exam_utils.dart';
+import 'package:exam/config/utils/exam_utils.dart';
 import 'package:exam/features/exam/domain/entities/question_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,11 +11,13 @@ import 'package:hive_ce_flutter/hive_ce_flutter.dart';
 class CountdownScreen extends StatefulWidget {
   final int minutes;
   final List<QuestionEntity> questions;
+  final String id;
 
   const CountdownScreen({
     super.key,
     required this.minutes,
     required this.questions,
+    required this.id,
   });
 
   @override
@@ -41,6 +43,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
     }
 
     _calculateRemainingTime();
+    timerBox.put('remaining_seconds', duration.inSeconds);
     startTimer();
   }
 
@@ -58,6 +61,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
       setState(() {
         _calculateRemainingTime();
       });
+      Hive.box('timer').put('remaining_seconds', duration.inSeconds);
 
       if (duration.inSeconds <= 0) {
         timer?.cancel();
@@ -115,6 +119,7 @@ class _CountdownScreenState extends State<CountdownScreen> {
                 ExamUtils.finishExam(
                   context: context,
                   questions: widget.questions,
+                  id: widget.id,
                 );
               },
               child: const Text(

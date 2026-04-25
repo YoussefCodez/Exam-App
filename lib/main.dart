@@ -3,6 +3,7 @@ import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:exam/features/explore/presentation/screens/explore_screen.dart';
 import 'package:exam/features/explore/presentation/screens/subject_screen.dart';
+import 'package:exam/features/home/presentation/screens/home_screen.dart';
 import 'package:exam/features/login/presentation/screens/login_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
 import 'package:exam/features/reset_password/presentation/screens/new_password_screen.dart';
@@ -29,7 +30,7 @@ Future<void> main() async {
   debugPrint(token);
   final bool rememberMe = prefs.getBool(AppStrings.rememberMeKey) ?? false;
   final String initialRoute = (token != null && rememberMe)
-      ? AppStrings.examRoute
+      ? HomeScreen.routeName
       : AppStrings.loginRoute;
   runApp(MyApp(initialRoute: initialRoute));
 }
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
     ExamScreen.routeName: (context) => ExamScreen(),
     ResultScreen.routeName: (context) => ResultScreen(),
     MainResultScreen.routeName: (context) => MainResultScreen(),
+    HomeScreen.routeName: (context) => const HomeScreen(),
   };
 
   @override
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.lightTheme,
-        initialRoute: ExploreScreen.routeName,
+        initialRoute: initialRoute,
         routes: routes,
       ),
     );

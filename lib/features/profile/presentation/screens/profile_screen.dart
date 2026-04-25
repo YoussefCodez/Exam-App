@@ -47,12 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final storage = getIt<FlutterSecureStorage>();
     final token = await storage.read(key: AppStrings.tokenKey);
 
-    viewModel.doEvent(
-      GetUserProfileInfoEvent(),
-      token ??
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDk3YjhkMDRkYTBkNGNmNTU2OGYzZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc3MDE0NjI2fQ.iUpCpYZ_xzHV87AVAo8Tgn2hgctcwudNcRvJT-KrCog',
-          null
-    );
+    viewModel.doEvent(GetUserProfileInfoEvent(), token ?? '', null);
   }
 
   @override
