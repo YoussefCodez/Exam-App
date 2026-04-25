@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:exam/core/colors/app_colors.dart';
+import 'package:exam/core/values/profile/profile_titles.dart';
 import 'package:exam/core/values/reset_password/forgot_password_titles.dart';
 
 import 'package:exam/features/reset_password/presentation/screens/verification_screen.dart';
@@ -102,7 +103,7 @@ class _ForgotPasswordEmailPageState extends State<ForgotPasswordEmailPage> {
                       Navigator.pushNamed(
                         context,
                         VerificationScreen.routeName,
-                        arguments: emailTextController.text.trim(),
+                        arguments: ProfileTitles.empty, // empty args
                       );
                     });
                   } else if (state is ResetError) {
