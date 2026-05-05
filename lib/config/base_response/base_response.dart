@@ -1,7 +1,7 @@
 sealed class BaseResponse<T> {}
 
 class SuccessBaseResponse<T> extends BaseResponse<T>{
-  T data;
+  T? data;
   String? message;
   String? token;
   SuccessBaseResponse({required this.data,this.message,this.token});

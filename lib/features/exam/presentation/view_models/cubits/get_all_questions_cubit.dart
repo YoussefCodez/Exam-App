@@ -24,7 +24,7 @@ class GetAllQuestionsCubit extends Cubit<GetAllQuestionsState> {
     try {
       final result = await getAllQuestionsUseCase.call(subjectId);
       if (result is SuccessBaseResponse<List<QuestionEntity>>) {
-        emit(GetAllQuestionsSuccess(result.data));
+        emit(GetAllQuestionsSuccess(result.data!));
       } else  if (result is ErrorBaseResponse){
         final errorResult = result as ErrorBaseResponse; 
         emit(GetAllQuestionsError(errorResult.message));

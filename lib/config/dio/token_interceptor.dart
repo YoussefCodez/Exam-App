@@ -39,16 +39,16 @@ class TokenInterceptor extends Interceptor {
       Endpoints.signUpUrl,
     ];
 
-    if (DioErrorHandler.isTokenExpired(err) ?? false) {
-      if (!authEndpoints.any((e) => err.requestOptions.path.contains(e))) {
-        await storage.delete(key: AppStrings.tokenKey);
-        await storage.delete(key: AppStrings.rememberMeKey);
-        MyApp.navigatorKey.currentState?.pushNamedAndRemoveUntil(
-          AppStrings.loginRoute,
-          (route) => false,
-        );
-      }
-    }
+    // if (DioErrorHandler.isTokenExpired(err) ?? false) {
+    //   if (!authEndpoints.any((e) => err.requestOptions.path.contains(e))) {
+    //     await storage.delete(key: AppStrings.tokenKey);
+    //     await storage.delete(key: AppStrings.rememberMeKey);
+    //     MyApp.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+    //       AppStrings.loginRoute,
+    //       (route) => false,
+    //     );
+    //   }
+    // }
     handler.next(err);
   }
 }

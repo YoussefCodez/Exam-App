@@ -16,6 +16,20 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import '../../core/network/network_info.dart' as _i892;
+import '../../features/change_password/api/api_client/change_password_api_client.dart'
+    as _i244;
+import '../../features/change_password/api/data_sources/change_password_data_sources_impl.dart'
+    as _i949;
+import '../../features/change_password/data/data_sources/change_password_data_sources_contract.dart'
+    as _i586;
+import '../../features/change_password/data/repo/change_password_repo_impl.dart'
+    as _i534;
+import '../../features/change_password/domain/repo/change_password_repo_contract.dart'
+    as _i333;
+import '../../features/change_password/domain/use_cases/change_password_use_case.dart'
+    as _i874;
+import '../../features/change_password/presentation/view_model/cubit/change_password_view_model.dart'
+    as _i939;
 import '../../features/exam/api/local_data_source/exam_local_data_source.dart'
     as _i628;
 import '../../features/exam/api/remote_data_source/exam_api_client.dart'
@@ -146,6 +160,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i6.SignupApiClient>(
       () => _i6.SignupApiClient(gh<_i361.Dio>()),
     );
+    gh.factory<_i244.ChangePasswordApiClient>(
+      () => _i244.ChangePasswordApiClient(gh<_i361.Dio>()),
+    );
     gh.factory<_i304.ExamApiClient>(() => _i304.ExamApiClient(gh<_i361.Dio>()));
     gh.factory<_i1020.ExploreApiClient>(
       () => _i1020.ExploreApiClient(gh<_i361.Dio>()),
@@ -181,6 +198,11 @@ extension GetItInjectableX on _i174.GetIt {
         examApiClient: gh<_i304.ExamApiClient>(),
         localDataSource: gh<_i628.ExamLocalDataSource>(),
         networkInfo: gh<_i892.NetworkInfo>(),
+      ),
+    );
+    gh.factory<_i586.ChangePasswordDataSourcesContract>(
+      () => _i949.ChangePasswordDataSourcesImpl(
+        gh<_i244.ChangePasswordApiClient>(),
       ),
     );
     gh.factory<_i191.LoginUseCase>(
@@ -228,6 +250,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i339.SignupRepoContract>(
       () => _i821.SignupRepoImpl(gh<_i485.SignupDataSourcesRemoteContract>()),
     );
+    gh.factory<_i333.ChangePasswordRepoContract>(
+      () => _i534.ChangePasswordRepoImpl(
+        gh<_i586.ChangePasswordDataSourcesContract>(),
+      ),
+    );
     gh.factory<_i546.ForgotPasswordRepoContract>(
       () => _i551.ForgotPasswordRepoImpl(
         gh<_i458.ForgotPasswordDataSourcesContract>(),
@@ -254,11 +281,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i851.ResetViewModel>(
       () => _i851.ResetViewModel(gh<_i194.ForgotPasswordUseCase>()),
     );
+    gh.factory<_i874.ChangePasswordUseCase>(
+      () => _i874.ChangePasswordUseCase(gh<_i333.ChangePasswordRepoContract>()),
+    );
     gh.factory<_i536.ExploreViewModel>(
       () => _i536.ExploreViewModel(gh<_i593.GetSubjectsUseCase>()),
     );
     gh.factory<_i774.SignupViewModel>(
       () => _i774.SignupViewModel(gh<_i254.SignupUseCase>()),
+    );
+    gh.factory<_i939.ChangePasswordViewModel>(
+      () => _i939.ChangePasswordViewModel(gh<_i874.ChangePasswordUseCase>()),
     );
     return this;
   }

@@ -16,7 +16,7 @@ class ProfileRepoImpl implements ProfileRepoContract {
     switch (response) {
       case SuccessBaseResponse<ProfileResponse>():
         return SuccessBaseResponse<UserProfile>(
-          data: response.data.user!.toDomain(),
+          data: response.data!.user!.toDomain(),
           message: response.message,
           token: response.token,
         );
@@ -27,15 +27,17 @@ class ProfileRepoImpl implements ProfileRepoContract {
         );
     }
   }
-  
-  @override
-  Future<BaseResponse<UserProfile>> updateProfile(String token, String lastName) async {
 
-    final response = await dataSources.updateLoggedUserInfo(token,lastName);
-        switch (response) {
+  @override
+  Future<BaseResponse<UserProfile>> updateProfile(
+    String token,
+    String lastName,
+  ) async {
+    final response = await dataSources.updateLoggedUserInfo(token, lastName);
+    switch (response) {
       case SuccessBaseResponse<ProfileResponse>():
         return SuccessBaseResponse<UserProfile>(
-          data: response.data.user!.toDomain(),
+          data: response.data?.user?.toDomain(),
           message: response.message,
           token: response.token,
         );
