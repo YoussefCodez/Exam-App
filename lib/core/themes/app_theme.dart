@@ -51,8 +51,8 @@ class AppTheme {
       labelMedium: TextStyle(
         fontSize: 14.sp,
         fontWeight: .w400,
-        color: AppColors.black
-      )
+        color: AppColors.black,
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,

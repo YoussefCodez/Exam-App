@@ -1,5 +1,6 @@
 import 'package:exam/config/di/di.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
+import 'package:exam/features/change_password/presentation/screens/change_password_screen.dart';
 import 'package:exam/features/exam/presentation/screens/exam_screen.dart';
 import 'package:exam/features/explore/presentation/screens/explore_screen.dart';
 import 'package:exam/features/explore/presentation/screens/subject_screen.dart';
@@ -27,7 +28,6 @@ Future<void> main() async {
   final storage = getIt<FlutterSecureStorage>();
   final prefs = getIt<SharedPreferences>();
   final String? token = await storage.read(key: AppStrings.tokenKey);
-  debugPrint(token);
   final bool rememberMe = prefs.getBool(AppStrings.rememberMeKey) ?? false;
   final String initialRoute = (token != null && rememberMe)
       ? HomeScreen.routeName
@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
     ResultScreen.routeName: (context) => ResultScreen(),
     MainResultScreen.routeName: (context) => MainResultScreen(),
     HomeScreen.routeName: (context) => const HomeScreen(),
+    ChangePasswordScreen.routeName: (context) => ChangePasswordScreen(),
   };
 
   @override
