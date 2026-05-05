@@ -30,7 +30,7 @@ class ProfileViewModel extends Cubit<ProfileStates> {
 
     switch (response) {
       case SuccessBaseResponse<UserProfile>():
-        emit(ProfileSuccess(response.data));
+        emit(ProfileSuccess(response.data!));
 
       case ErrorBaseResponse<UserProfile>():
         emit(ProfileError(response.message));

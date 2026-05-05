@@ -58,7 +58,7 @@ class LoginCubit extends Cubit<LoginState> {
         case SuccessBaseResponse<LoginResultEntity>(data: final userEntity):
           await _secureStorage.write(
             key: AppStrings.tokenKey,
-            value: userEntity.token,
+            value: userEntity!.token,
           );
 
           if (rememberMe) {

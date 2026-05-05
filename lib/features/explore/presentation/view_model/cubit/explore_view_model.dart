@@ -27,7 +27,7 @@ class ExploreViewModel extends Cubit<ExploreStates> {
     final response = await _getSubjectsUseCase.call();
     switch (response) {
       case SuccessBaseResponse<List<Subject>>():
-        emit(ExploreSuccess(response.data));
+        emit(ExploreSuccess(response.data!));
         break;
       case ErrorBaseResponse<List<Subject>>():
         emit(ExploreError(response.message));

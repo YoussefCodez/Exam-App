@@ -26,7 +26,7 @@ class SignupViewModel extends Cubit<SignupStates> {
 
     switch (response) {
       case SuccessBaseResponse<User>():
-        emit(SignupSuccess(response.data));
+        emit(SignupSuccess(response.data!));
 
       case ErrorBaseResponse<User>():
         emit(SignupError(response.message));

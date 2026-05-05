@@ -19,8 +19,8 @@ class LoginRepoImpl implements LoginRepoContract {
     return switch (result) {
       SuccessBaseResponse<LoginResponse>(data: final data) => SuccessBaseResponse<LoginResultEntity>(
           data: LoginResultEntity(
-            token: data.token ?? "",
-            user: data.user?.toUserEntity(data.token ?? "") ??
+            token: data?.token ?? "",
+            user: data?.user?.toUserEntity(data.token ?? "") ??
                 UserEntity(name: '', email: '', phone: '', token: ''),
           ),
           message: result.message,

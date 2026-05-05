@@ -19,7 +19,7 @@ class SignupRepoImpl implements SignupRepoContract {
     switch (response) {
       case SuccessBaseResponse<SignUpResponse>():
         return SuccessBaseResponse<User>(
-          data: response.data.user!.toDomain(),
+          data: response.data!.user!.toDomain(),
           message: response.message,
           token: response.token,
         );
