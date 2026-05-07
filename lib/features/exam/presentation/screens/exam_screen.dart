@@ -71,9 +71,10 @@ class ExamView extends StatelessWidget {
         onConfirm: () {
           context.read<UserAnswerCubit>().clearAnswers();
           Hive.box('timer').clear();
-          Navigator.pushNamed(
+          Navigator.pushNamedAndRemoveUntil(
             context,
             HomeScreen.routeName,
+            (route) => false,
           );
         },
       ),

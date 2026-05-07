@@ -77,8 +77,8 @@ class ExitExamDialog extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  onConfirm();
                   Navigator.pop(context);
+                  onConfirm();
                 },
                 child: Text(
                   AppStrings.yes,

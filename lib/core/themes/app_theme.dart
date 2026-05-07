@@ -6,6 +6,9 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.white,
     appBarTheme: AppBarTheme(backgroundColor: AppColors.white),
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
+    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         elevation: 0.0,

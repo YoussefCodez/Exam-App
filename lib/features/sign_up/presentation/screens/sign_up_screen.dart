@@ -109,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             leading: Padding(
               padding: EdgeInsets.all(16.0),
               child: InkWell(
-                child: Icon(Icons.arrow_back_ios),
+                child: const Icon(Icons.arrow_back_ios_new),
                 onTap: () {
                   Navigator.pop(context);
                 },

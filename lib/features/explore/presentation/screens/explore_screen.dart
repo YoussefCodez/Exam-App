@@ -20,6 +20,7 @@ class ExploreScreen extends StatefulWidget {
 
 class _ExploreScreenState extends State<ExploreScreen> {
   final ExploreViewModel viewModel = getIt.get<ExploreViewModel>();
+  String searchQuery = '';
   @override
   void initState() {
     viewModel.doEvent(event: GetSubjectsEvent());
@@ -59,6 +60,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 TextStyle(color: AppColors.grey),
               ),
               leading: Icon(Icons.search, color: AppColors.grey),
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value.toLowerCase();
+                });
+              },
             ),
           ),
 
@@ -79,24 +85,27 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: CircularProgressIndicator(color: AppColors.blue),
                   );
                 } else if (state is ExploreSuccess) {
+                  final filteredList = state.data.where((subject) => 
+                      (subject.name ?? '').toLowerCase().contains(searchQuery)).toList();
+                      
                   return Expanded(
                     child: ListView.builder(
                       itemBuilder: (context, index) => InkWell(
                         child: SubjectContainer(
-                          name: state.data[index].name!,
-                          icon: state.data[index].icon!,
+                          name: filteredList[index].name!,
+                          icon: filteredList[index].icon!,
                         ),
                         onTap: () => Navigator.pushNamed(
                           context,
                           SubjectScreen.routeName,
                           arguments: {
-                            "name": state.data[index].name,
-                            "icon": state.data[index].icon,
-                            "id": state.data[index].id
+                            "name": filteredList[index].name,
+                            "icon": filteredList[index].icon,
+                            "id": filteredList[index].id
                           },
                         ),
                       ),
-                      itemCount: state.data.length,
+                      itemCount: filteredList.length,
                     ),
                   );
                 } else if (state is ExploreError) {

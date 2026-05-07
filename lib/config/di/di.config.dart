@@ -170,11 +170,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i804.LoginDataSourceRemoteContract>(
       () => _i743.LoginDataSourceRemoteImpl(gh<_i1036.LoginApiClient>()),
     );
-    gh.factory<_i961.LoginRepoContract>(
-      () => _i546.LoginRepoImpl(
-        loginDataSourceRemote: gh<_i804.LoginDataSourceRemoteContract>(),
-      ),
-    );
     gh.factory<_i880.LoginLocalDataSource>(
       () => _i880.LoginLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
@@ -198,6 +193,13 @@ extension GetItInjectableX on _i174.GetIt {
         examApiClient: gh<_i304.ExamApiClient>(),
         localDataSource: gh<_i628.ExamLocalDataSource>(),
         networkInfo: gh<_i892.NetworkInfo>(),
+      ),
+    );
+    gh.factory<_i961.LoginRepoContract>(
+      () => _i546.LoginRepoImpl(
+        loginDataSourceRemote: gh<_i804.LoginDataSourceRemoteContract>(),
+        loginLocalDataSource: gh<_i880.LoginLocalDataSource>(),
+        secureStorage: gh<_i558.FlutterSecureStorage>(),
       ),
     );
     gh.factory<_i586.ChangePasswordDataSourcesContract>(
@@ -258,16 +260,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i586.ChangePasswordDataSourcesContract>(),
       ),
     );
+    gh.factory<_i753.LoginCubit>(
+      () => _i753.LoginCubit(gh<_i191.LoginUseCase>()),
+    );
     gh.factory<_i546.ForgotPasswordRepoContract>(
       () => _i551.ForgotPasswordRepoImpl(
         gh<_i458.ForgotPasswordDataSourcesContract>(),
-      ),
-    );
-    gh.factory<_i753.LoginCubit>(
-      () => _i753.LoginCubit(
-        gh<_i191.LoginUseCase>(),
-        gh<_i558.FlutterSecureStorage>(),
-        gh<_i880.LoginLocalDataSource>(),
       ),
     );
     gh.factory<_i194.ForgotPasswordUseCase>(

@@ -1,7 +1,6 @@
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
-import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
 import 'package:exam/features/reset_password/presentation/screens/forgot_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +20,7 @@ class RememberMeSection extends StatelessWidget {
             return Checkbox(
               value: rememberMe,
               onChanged: (value) {
-                context.read<LoginCubit>().doEvent(
-                      ToggleRememberMe(),
-                      value: value ?? false,
-                    );
+                context.read<LoginCubit>().toggleRememberMe(value ?? false);
               },
             );
           },

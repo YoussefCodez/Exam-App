@@ -2,7 +2,6 @@ import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/themes/app_colors.dart';
 import 'package:exam/features/home/presentation/screens/home_screen.dart';
 import 'package:exam/features/login/presentation/view_models/cubits/login_cubit.dart';
-import 'package:exam/features/login/presentation/view_models/states/login_events.dart';
 import 'package:exam/features/login/presentation/widgets/dont_have_account_section.dart';
 import 'package:exam/features/login/presentation/widgets/login_button.dart';
 import 'package:exam/features/login/presentation/widgets/login_email_field.dart';
@@ -115,8 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   LoginButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        context.read<LoginCubit>().doEvent(
-                          Login(),
+                        context.read<LoginCubit>().login(
                           email: _emailController.text,
                           password: _passwordController.text,
                         );

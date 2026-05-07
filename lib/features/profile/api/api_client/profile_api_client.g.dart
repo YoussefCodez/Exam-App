@@ -50,7 +50,7 @@ class _ProfileApiClient implements ProfileApiClient {
   @override
   Future<ProfileResponse> updateLoggedUserInfo(
     String token,
-    Map<String, dynamic> body,
+    Map<String, String?> body,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
