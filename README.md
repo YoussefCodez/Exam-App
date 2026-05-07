@@ -74,6 +74,14 @@ lib/
  └── main.dart          # App Entry point
 ```
 
+## Screen Shots
+
+<img width="1920" height="1080" alt="exam1" src="https://github.com/user-attachments/assets/ebb4559d-8cbc-448c-a19d-9e6c79b18b1a" />
+<img width="1920" height="1080" alt="exam2" src="https://github.com/user-attachments/assets/b9811b90-ffd8-4af9-a7ed-0413bb72ab4e" />
+<img width="1920" height="1080" alt="exam3" src="https://github.com/user-attachments/assets/d89c9502-905a-456d-a8b0-d0353edb1935" />
+<img width="1920" height="1080" alt="exam5" src="https://github.com/user-attachments/assets/6ec4f8f2-b9e4-4108-b0c4-e54c98718e5b" />
+
+
 ---
 
 ## ⚙️ How to Run
