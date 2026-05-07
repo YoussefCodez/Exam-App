@@ -31,9 +31,9 @@ class ProfileRepoImpl implements ProfileRepoContract {
   @override
   Future<BaseResponse<UserProfile>> updateProfile(
     String token,
-    String lastName,
+    UserProfile user,
   ) async {
-    final response = await dataSources.updateLoggedUserInfo(token, lastName);
+    final response = await dataSources.updateLoggedUserInfo(token, user);
     switch (response) {
       case SuccessBaseResponse<ProfileResponse>():
         return SuccessBaseResponse<UserProfile>(

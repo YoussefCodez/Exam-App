@@ -1,25 +1,27 @@
 import 'package:exam/config/base_response/base_response.dart';
 import 'package:exam/features/profile/domain/entities/user_profile.dart';
 import 'package:exam/features/profile/domain/use_cases/get_profile_info_usecase.dart';
+import 'package:exam/features/profile/domain/use_cases/update_profile_info_usecase.dart';
 import 'package:exam/features/profile/presentation/view_model/states/profile_events.dart';
 import 'package:exam/features/profile/presentation/view_model/states/profile_states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-
 @injectable
 class ProfileViewModel extends Cubit<ProfileStates> {
   final GetProfileInfoUseCase _callProfileUsecase;
-  // final UpdateProfileInfoUseCase _callUpdateProfileUsecase;
+  final UpdateProfileInfoUsecase _callUpdateProfileUsecase;
 
-  ProfileViewModel(this._callProfileUsecase) : super(ProfileInitial());
+  ProfileViewModel(this._callProfileUsecase, this._callUpdateProfileUsecase)
+    : super(ProfileInitial());
 
-  void doEvent(ProfileEvents event, String token, String? lastName) async {
+  void doEvent(ProfileEvents event, String token, UserProfile user) async {
     switch (event) {
       case GetUserProfileInfoEvent():
         await _getProfileInfo(token: token);
-      // case UpdateUserEvent():
-      //   await _updateProfile(token: token, lastName: lastName);
+
+      case UpdateUserProfileInfoEvent():
+        await _updateProfile(token: token, user: user);
     }
   }
 
@@ -30,28 +32,26 @@ class ProfileViewModel extends Cubit<ProfileStates> {
 
     switch (response) {
       case SuccessBaseResponse<UserProfile>():
-        emit(ProfileSuccess(response.data!));
+        emit(ProfileSuccess(response.data ?? UserProfile()));
 
       case ErrorBaseResponse<UserProfile>():
         emit(ProfileError(response.message));
     }
   }
 
+  Future<void> _updateProfile({
+    required String token,
+    required UserProfile user,
+  }) async {
+    emit(ProfileLoading());
+    final response = await _callUpdateProfileUsecase.call(token, user);
 
-  // Future<void> _updateProfile({required String token,required String lastName}) async {
-  //   emit(ProfileLoading());
+    switch (response) {
+      case SuccessBaseResponse<UserProfile>():
+        emit(ProfileSuccess(response.data ?? UserProfile()));
 
-  //   final response = await _callUpdateProfileUsecase.call(token, lastName);
-
-  //   switch (response) {
-  //     case SuccessBaseResponse<UserProfile>():
-  //       emit(ProfileSuccess(response.data));
-
-  //     case ErrorBaseResponse<UserProfile>():
-  //       emit(ProfileError(response.message));
-  //   }
-  // }
-
-
-
+      case ErrorBaseResponse<UserProfile>():
+        emit(ProfileError(response.message));
+    }
+  }
 }

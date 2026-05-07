@@ -19,6 +19,6 @@ abstract class ProfileApiClient {
   @PUT(Endpoints.editProfileUrl)
   Future<ProfileResponse> updateLoggedUserInfo(
     @Header(ProfileDataSourceMap.token) String token,
-    @Body() Map<String, dynamic> body,
+    @Body() Map<String, String?> body,
   );
 }

@@ -1,11 +1,11 @@
 class ProfileTitles {
   static const String routeName = 'profile';
   static const String title = 'Profile';
-  static const String username = "Username";
-  static const String firstName = "First Name";
-  static const String lastName = "Last Name";
-  static const String email = "Email";
-  static const String phone = "Phone Number";
+  static const String username = "username";
+  static const String firstName = "firstName";
+  static const String lastName = "lastName";
+  static const String email = "email";
+  static const String phone = "phone";
   static const String password = "Password";
   static const String change = "Change";
   static const String empty = '';

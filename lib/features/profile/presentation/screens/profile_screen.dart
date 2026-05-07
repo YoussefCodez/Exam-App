@@ -4,14 +4,13 @@ import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/profile/profile_titles.dart';
 import 'package:exam/features/change_password/presentation/screens/change_password_screen.dart';
+import 'package:exam/features/profile/domain/entities/user_profile.dart';
 import 'package:exam/features/profile/presentation/view_model/cubit/cubit.dart';
 import 'package:exam/features/profile/presentation/view_model/states/profile_events.dart';
 import 'package:exam/features/profile/presentation/view_model/states/profile_states.dart';
-import 'package:exam/features/reset_password/presentation/screens/new_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:password_validator_mate/password_validator_mate.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String routeName = ProfileTitles.routeName;
@@ -32,11 +31,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final phoneTextController = TextEditingController();
 
   final ProfileViewModel viewModel = getIt.get<ProfileViewModel>();
+  late String? token;
 
   @override
   void initState() {
-    super.initState();
     getToken();
+    super.initState();
   }
 
   @override
@@ -46,9 +46,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   void getToken() async {
     final storage = getIt<FlutterSecureStorage>();
-    final token = await storage.read(key: AppStrings.tokenKey);
-
-    viewModel.doEvent(GetUserProfileInfoEvent(), token ?? '', null);
+    token = await storage.read(key: AppStrings.tokenKey);
+    viewModel.doEvent(GetUserProfileInfoEvent(), token ?? "", UserProfile());
   }
 
   @override
@@ -68,15 +67,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }
 
               if (state is ProfileError) {
-                return SnackBar(content: Text(state.message));
+                return Text(state.message);
               }
 
               if (state is ProfileSuccess) {
-                userNameTextController.text = state.user.username!;
-                firstNameTextController.text = state.user.firstName!;
-                lastNameTextController.text = state.user.lastName!;
-                emailTextController.text = state.user.email!;
-                phoneTextController.text = state.user.phone!;
+                userNameTextController.text = state.user.username ?? "";
+                firstNameTextController.text = state.user.firstName ?? "";
+                lastNameTextController.text = state.user.lastName ?? "";
+                emailTextController.text = state.user.email ?? "";
+                phoneTextController.text = state.user.phone ?? "";
                 passwordTextController.text = ProfileTitles.password;
                 return Column(
                   children: [
@@ -241,24 +240,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: ElevatedButton(
                               onPressed: () {
-                                if (!_formKey.currentState!.validate()) {
-                                  setState(() {});
-                                  return;
+                                if (_formKey.currentState!.validate()) {
+                                  viewModel.doEvent(
+                                    UpdateUserProfileInfoEvent(),
+                                    token ?? "",
+                                    UserProfile(
+                                      firstName: firstNameTextController.text,
+                                      lastName: lastNameTextController.text,
+                                      email: emailTextController.text,
+                                      username: userNameTextController.text,
+                                      phone: phoneTextController.text,
+                                    ),
+                                  );
                                 }
-
-                                // viewModel.doEvent(
-                                //   UpdateUserEvent(),
-                                //   UserCreated(
-                                //     email: emailTextController.text,
-                                //     firstName: firstNameTextController.text,
-                                //     lastName: lastNameTextController.text,
-                                //     password: passwordTextController.text,
-                                //     phone: phoneTextController.text,
-                                //     rePassword:
-                                //         confirmPasswordTextController.text,
-                                //     username: userNameTextController.text,
-                                //   ),
-                                // );
                               },
                               child: Text(ProfileTitles.update),
                             ),
@@ -270,12 +264,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               }
 
-              return SnackBar(
-                content: Text(
-                  ProfileTitles.loadingProfile,
-                  style: TextStyle(color: AppColors.red),
-                ),
-              );
+              return const SizedBox();
             },
           ),
         ),

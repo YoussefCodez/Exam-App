@@ -4,5 +4,5 @@ import 'package:exam/features/profile/domain/entities/user_profile.dart';
 abstract interface class ProfileRepoContract {
   Future<BaseResponse<UserProfile>> getProfile(String token);
 
-  Future<BaseResponse<UserProfile>> updateProfile(String token, String lastName);
+  Future<BaseResponse<UserProfile>> updateProfile(String token, UserProfile user);
 }

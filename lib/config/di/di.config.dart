@@ -240,7 +240,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i932.ExploreRepoImpl(gh<_i634.ExploreDataSourcesContract>()),
     );
     gh.factory<_i257.ProfileViewModel>(
-      () => _i257.ProfileViewModel(gh<_i150.GetProfileInfoUseCase>()),
+      () => _i257.ProfileViewModel(
+        gh<_i150.GetProfileInfoUseCase>(),
+        gh<_i599.UpdateProfileInfoUsecase>(),
+      ),
     );
     gh.factory<_i455.GetAllQuestionsCubit>(
       () => _i455.GetAllQuestionsCubit(

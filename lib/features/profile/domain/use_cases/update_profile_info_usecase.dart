@@ -8,9 +8,9 @@ class UpdateProfileInfoUsecase {
   final ProfileRepoContract repo;
   UpdateProfileInfoUsecase(this.repo);
 
-  Future<BaseResponse<UserProfile>> call(String token, String lastName) async {
+  Future<BaseResponse<UserProfile>> call(String token, UserProfile user) async {
     
-     final response = await repo.updateProfile(token,lastName);
+     final response = await repo.updateProfile(token,user);
 
     switch (response) {
       case SuccessBaseResponse<UserProfile>():
