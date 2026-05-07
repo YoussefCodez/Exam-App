@@ -1,17 +1,104 @@
-# exam
+# 🎓 Exam App - Flutter Professional Project
 
-A new Flutter project.
+A modern, robust, and scalable Examination Platform built with **Flutter**, following high-standard **Clean Architecture** principles and **SOLID** design patterns. This project was developed as part of the Elevate Flutter program, demonstrating advanced state management and architectural excellence.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Key Features
 
-A few resources to get you started if this is your first Flutter project:
+- **🔐 Secure Authentication**: Full user flow including Sign Up, Login (with "Remember Me"), and a secure multi-step Password Reset flow (Email -> Validation Code -> New Password).
+- **📚 Subject Explorer**: Browse available subjects with an integrated **real-time search** functionality.
+- **📝 Interactive Exams**: 
+  - Dynamic question loading.
+  - Real-time exam timer.
+  - Persistent state (timer state saved locally).
+  - Safety Exit Dialogs to prevent accidental test closure.
+- **📊 Result Tracking**: Detailed scoring and feedback after exam completion.
+- **📱 Responsive UI**: State-of-the-art UI design using `flutter_screenutil` for perfect display across all device sizes.
+- **🌗 Platform Adaptive**: Custom global themes and iOS-style navigation icons for a premium feel.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🏗️ Architecture & Design Patterns
+
+The project strictly adheres to **Clean Architecture** (Feature-First approach) to ensure the code is maintainable, testable, and scalable.
+
+### Layers:
+1. **Presentation Layer**: 
+   - Uses **BLoC/Cubit** for reactive state management.
+   - Decoupled UI components for maximum reusability.
+2. **Domain Layer**: 
+   - Contains **Entities** and **Use Cases** (the core business logic).
+   - Independent of any external libraries or data sources.
+   - Repository Contracts (Interfaces) to enforce dependency inversion.
+3. **Data Layer**: 
+   - **Repository Implementations**: Bridge between domain and data sources.
+   - **Data Sources**: Remote (REST API with Retrofit) and Local (Hive & Secure Storage).
+   - **Models**: DTOs for JSON serialization/deserialization.
+
+### Design Principles:
+- **SOLID**: Single Responsibility, Open/Closed, and Dependency Inversion are strictly followed.
+- **Dependency Injection**: Fully implemented using `get_it` and `injectable`.
+- **MVI (Model-View-Intent)**: Cubits utilize an intent-based structure (transformed from local doEvent patterns to explicit methods for type safety).
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Flutter](https://flutter.dev/)
+- **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc)
+- **Networking**: [Dio](https://pub.dev/packages/dio) & [Retrofit](https://pub.dev/packages/retrofit)
+- **Dependency Injection**: [get_it](https://pub.dev/packages/get_it) & [injectable](https://pub.dev/packages/injectable)
+- **Local Database**: [Hive](https://pub.dev/packages/hive_ce)
+- **Security**: [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)
+- **UI & Styling**: [flutter_screenutil](https://pub.dev/packages/flutter_screenutil) & [gap](https://pub.dev/packages/gap)
+- **Validation**: [email_validator](https://pub.dev/packages/email_validator) & [password_validator_mate](https://pub.dev/packages/password_validator_mate)
+
+---
+
+## 📂 Project Structure
+
+```text
+lib/
+ ├── config/            # DI, Themes, and Global Configs
+ ├── core/              # Common widgets, constants, and utilities
+ ├── features/          # Feature-based modules
+ │    ├── login/
+ │    │    ├── api/           # Data Sources & Api Clients
+ │    │    ├── data/          # Models & Repository Impls
+ │    │    ├── domain/        # Entities, Use cases & Repository Contracts
+ │    │    └── presentation/  # Screens, Cubits & Widgets
+ │    ├── signup/
+ │    ├── exam/
+ │    └── ... (other features)
+ └── main.dart          # App Entry point
+```
+
+---
+
+## ⚙️ How to Run
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/exam-app.git
+   ```
+2. **Setup dependencies**:
+   ```bash
+   flutter pub get
+   ```
+3. **Generate needed files** (Retrofit/Injectable):
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+4. **Run the app**:
+   ```bash
+   flutter run
+   ```
+
+---
+
+## 👨‍💻 Author
+**Youssef** - Flutter Developer
+
+---
+*This project was audited and refactored to meet "Production-Ready" standards.*
