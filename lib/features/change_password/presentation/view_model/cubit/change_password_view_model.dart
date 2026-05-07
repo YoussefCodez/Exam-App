@@ -52,10 +52,8 @@ class ChangePasswordViewModel extends Cubit<ChangePasswordState> {
     switch (response) {
       case SuccessBaseResponse<String>():
         emit(ChangePasswordSuccessState(response.message!));
-        print("I am in success state in view Model and the response message is ${response.message} and the response token is ${response.token}");
       case ErrorBaseResponse<String>():
         emit(ChangePasswordErrorState(response.message));
-        print("I am in error state in view Model and the response message is ${response.message} and the response code is ${response.code}");
     }
   }
 }

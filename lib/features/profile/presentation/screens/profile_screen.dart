@@ -3,6 +3,7 @@ import 'package:exam/config/di/di.dart';
 import 'package:exam/core/app_strings/app_strings.dart';
 import 'package:exam/core/colors/app_colors.dart';
 import 'package:exam/core/values/profile/profile_titles.dart';
+import 'package:exam/features/change_password/presentation/screens/change_password_screen.dart';
 import 'package:exam/features/profile/presentation/view_model/cubit/cubit.dart';
 import 'package:exam/features/profile/presentation/view_model/states/profile_events.dart';
 import 'package:exam/features/profile/presentation/view_model/states/profile_states.dart';
@@ -94,9 +95,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           if (value == null || value.trim().isEmpty) {
                             return ProfileTitles.usernameRequired;
                           }
-                          if (!EmailValidator.validate(value)) {
-                            return ProfileTitles.emailInvalid;
-                          }
                           return null;
                         },
                       ),
@@ -178,14 +176,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         vertical: 8,
                       ),
                       child: TextFormField(
+                        readOnly: true,
                         decoration: InputDecoration(
-                          labelText: "Password",
+                          labelText: ProfileTitles.password,
                           border: OutlineInputBorder(),
                           suffixIcon: TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
                                 context,
-                                NewPasswordScreen.routeName,
+                                ChangePasswordScreen.routeName,
                                 arguments: '',
                               );
                             },
@@ -203,13 +202,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return ProfileTitles.passwordRequired;
-                          }
-
-                          final rules = PasswordValidators.defaultRules();
-                          for (var rule in rules) {
-                            if (!rule.validator(value)) {
-                              return rule.description;
-                            }
                           }
 
                           return null;
