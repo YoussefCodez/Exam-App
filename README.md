@@ -48,7 +48,7 @@ The project strictly adheres to **Clean Architecture** (Feature-First approach) 
 - **Framework**: [Flutter](https://flutter.dev/)
 - **State Management**: [flutter_bloc](https://pub.dev/packages/flutter_bloc)
 - **Networking**: [Dio](https://pub.dev/packages/dio) & [Retrofit](https://pub.dev/packages/retrofit)
-- **Dependency Injection**: [get_it](https://pub.dev/packages/get_it) & [injectable](https://pub.dev/packages/injectable)
+- **Dependency Injection**: [get_it](https://pub.dev/packages/get_it) & [injectable](https://pub.dev/packages/injectable)Youssef
 - **Local Database**: [Hive](https://pub.dev/packages/hive_ce)
 - **Security**: [flutter_secure_storage](https://pub.dev/packages/flutter_secure_storage)
 - **UI & Styling**: [flutter_screenutil](https://pub.dev/packages/flutter_screenutil) & [gap](https://pub.dev/packages/gap)
@@ -105,8 +105,9 @@ lib/
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Authors
 **Youssef** - Flutter Developer
+**Abdalrahman** - Flutter Developer
 
 ---
 *This project was audited and refactored to meet "Production-Ready" standards.*
